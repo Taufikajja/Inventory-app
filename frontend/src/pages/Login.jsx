@@ -19,24 +19,25 @@ const Login = () => {
         
 
         try {
-        const response = await axios.post(
-            "http://localhost:3000/api/auth/login", {
-            email, password
-        }
-    );
-    console.log(response.data);
-        
-            if (response.data.success) {
-                await login(response.data.user, response.data.token);
-                if(response.data.user.role === "admin") {
-                    navigate("/admin-dashboard");
-                } else {
-                    navigate("/customer-dashboard");
-                }
+        const response = await fetch("http://localhost:3000/api/auth/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ email, password })
+        });
+        const data = await response.json();
+        console.log(data);
+        if (data.success) {
+            await login(data.user, data.token);
+            if (data.user.role === "admin") {
+                navigate("/admin-dashboard");
             } else {
-                alert(response.data.error);
+                navigate("/customer-dashboard");
             }
-
+        } else {
+            alert(data.error);
+        }
         } catch (error) {
             if(error.response) {
                 setError(error.response.data.message);

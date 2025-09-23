@@ -19,8 +19,7 @@ const upload = multer({ storage: storage });
 const router = express.Router();
 
 
-router.get('/', authMiddleware, getProducts);
-// router.get('/', authMiddleware, getProductById);
+router.get('/', getProducts);
 // Route untuk upload gambar produk
 // Gabungkan upload gambar ke route add dan update
 router.post('/add', authMiddleware, upload.single('image'), addProduct);
