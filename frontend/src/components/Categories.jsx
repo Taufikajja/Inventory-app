@@ -1,6 +1,7 @@
 import React,{ useState, useEffect } from 'react'
 import axios from "axios";
- 
+//  import AOS from 'aos'; 
+//  import 'aos/dist/aos.css'; 
 
 const Categories = () => {
     const [categoryName, setCategoryName] = useState("");
@@ -27,6 +28,13 @@ const Categories = () => {
         };
         
     useEffect(() => {
+        //test
+        // AOS.init({
+        //     offset: 100,
+        //     duration: 500,
+        //     easing: 'ease-in-out',
+        // });
+        // //batas test atas
         fetchCategories();
     }, []);
  
@@ -115,6 +123,7 @@ if (confirmDelete) {
         setCategoryDescription("");
     };
 
+
     if(loading) return <div>Loading ....</div>
     return (
     <div className="p-4">
@@ -163,6 +172,25 @@ if (confirmDelete) {
                 </form>
             </div>
         </div>
+{/* 
+        test saja
+        <div id='products' className='w-full lg:px-20 px-5 py-[80px] bg-gray-100 flex
+        flex-col justify-center items-center gap-4'>
+        <h1 data-aos="zoom-in" data-aos-delay="100" className="text-themepurple
+        text-xl font-semibold">Oke gas</h1>
+        <h1 data-aos="zoom-in" data-aos-delay="100" className="text-themepurple
+        text-xl font-semibold text-[42] leading-[50px] text-center">makan bang</h1>
+        <div data-aos="zoom-in" data-aos-delay="300" className='w-full grid lg:grid-cols-4 grid-cols-1 justify-center item-center items-center gap-10 mt-10'>
+            {categories.map((category, index) => (
+            <div id='product-box' key={index} className='flex flex-col justify-center items-center gap-2 bg-white p-4 rounded-lg cursor-pointer-relative' >
+                <img src={category.img} alt="" />
+                <h1 className='text-lg text-gray-400 font-semibold'>{category.categoryName}</h1>
+                    <h1 className='text-lg text-gray-400 font-semibold'>{category.categoryDescription}</h1>
+            </div>
+           ))}
+        </div>
+        
+        </div> */}
 
         <div className="lg:w-2/3">
         <div className="bg-white shadow-md rounded-lg p-4">

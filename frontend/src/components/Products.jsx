@@ -10,6 +10,7 @@ const Products = () => {
     const [products, setProducts] = useState([]);
     const [filteredProducts, setFilteredProducts] = useState([]);
     const [ formData, setFormData] = useState({
+        image: null,
         name: "",
         description: "",
         price: "",
@@ -17,6 +18,8 @@ const Products = () => {
         categoryId: "",
         supplierId: "",
     });
+    const [previewImage, setPreviewImage] = useState(null);
+    const [modalPreviewImage, setModalPreviewImage] = useState(null);
 
 
 
@@ -46,25 +49,45 @@ const Products = () => {
     }, []);
 
     const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData ((prevData) => ( {
-            ...prevData,
-            [name]: value,
-        }));
+        const { name, value, type, files } = e.target;
+        if (type === "file") {
+            const file = files[0];
+            setFormData((prevData) => ({
+                ...prevData,
+                image: file,
+            }));
+            if (file) {
+                setPreviewImage(URL.createObjectURL(file));
+            } else {
+                setPreviewImage(null);
+            }
+        } else {
+            setFormData((prevData) => ({
+                ...prevData,
+                [name]: value,
+            }));
+        }
     }
 
     const handleEdit = (product) => {
         setOpenModal(true);
         setEditProduct(product._id);
         setFormData ({
-           name: product.name,
-           description: product.description,
-           price: product.price,
-           stock: product.stock,
-           categoryId: product.categoryId._id, 
-           supplierId: product.supplierId._id, 
+            image: null,
+            name: product.name,
+            description: product.description,
+            price: product.price,
+            stock: product.stock,
+            categoryId: product.categoryId._id, 
+            supplierId: product.supplierId._id, 
         });
-        };
+        // Tampilkan gambar lama jika ada
+        if (product.image) {
+            setPreviewImage(`http://localhost:3000/uploads/${product.image}`);
+        } else {
+            setPreviewImage(null);
+        }
+    };
 
     const handleDelete = async (id) => {
         const confirmDelete = window.confirm("Are you sure you want to delete this Product?");
@@ -96,42 +119,57 @@ const Products = () => {
         setOpenModal(false);
         setEditProduct(null);
         setFormData({
+            image: null,
             name: "",
             description: "",
             price: "",
             stock: "",
             categoryId: "",
-        })
+            supplierId: "",
+        });
+        setPreviewImage(null);
     }
     
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        const data = new FormData();
+        data.append("name", formData.name);
+        data.append("description", formData.description);
+        data.append("price", formData.price);
+        data.append("stock", formData.stock);
+        data.append("categoryId", formData.categoryId);
+        data.append("supplierId", formData.supplierId);
+        if (formData.image) {
+            data.append("image", formData.image);
+        }
 
         if(editProduct) {
             try {
                 const response = await axios.put(
-                `http://localhost:3000/api/products/${editProduct}`,
-                formData,
-                {
-                    headers: {
-                    Authorization: `Bearer ${localStorage.getItem("pos-token")}`,
-                    },
-                }
+                    `http://localhost:3000/api/products/${editProduct}`,
+                    data,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${localStorage.getItem("pos-token")}`,
+                            'Content-Type': 'multipart/form-data',
+                        },
+                    }
                 );
                 if (response.data.success) {
-                alert("Product updated successfully!");
-                fetchProducts();
-                setOpenModal(false);
-                setEditProduct(null);
-                setFormData({
-                    name: "",
-                    description: "",
-                    price: "",
-                    stock: "",
-                    categoryId: "",
-                    supplierId: "",
-                }); 
+                    alert("Product updated successfully!");
+                    fetchProducts();
+                    setOpenModal(false);
+                    setEditProduct(null);
+                    setFormData({
+                        image: null,
+                        name: "",
+                        description: "",
+                        price: "",
+                        stock: "",
+                        categoryId: "",
+                        supplierId: "",
+                    });
                 } else {
                     alert("Error updating Product. Please try again.");
                 }
@@ -139,14 +177,14 @@ const Products = () => {
                 alert("Error updating Product. Please try again.");
             }
             return;
-        } 
-        else {
+        } else {
             try {
                 const response = await axios.post('http://localhost:3000/api/products/add',
-                    formData,
+                    data,
                     {
                         headers: {
                             Authorization: `Bearer ${localStorage.getItem("pos-token")}`,
+                            'Content-Type': 'multipart/form-data',
                         },
                     }
                 );
@@ -155,21 +193,20 @@ const Products = () => {
                     alert("Products added successfully !");
                     setOpenModal(false);
                     setFormData({
-                      name: "",
-                      description: "",
-                      price: "",
-                      stock: "",
-                      categoryId: "",
-                      supplierId: "",
+                        image: null,
+                        name: "",
+                        description: "",
+                        price: "",
+                        stock: "",
+                        categoryId: "",
+                        supplierId: "",
                     });
                 } else {
-                    // console.error("error adding product:", response.data);
                     alert("Error adding Product. Please try again");
                 }
             } catch (error) {
-                // console.error("Error adding product:", error.message);
                 alert("Error adding product. Please try again");
-        }
+            }
         }
     };
 
@@ -204,6 +241,7 @@ const Products = () => {
                   <thead>
                       <tr className="bg-gray-200">
                           <th className="border border-gray-300 p-2">S No</th>
+                          <th className="border border-gray-300 p-2">Product Image</th>
                           <th className="border border-gray-300 p-2">Product Name</th>
                           <th className="border border-gray-300 p-2">Category Name</th>
                           <th className="border border-gray-300 p-2">Supplier Name</th>
@@ -217,6 +255,18 @@ const Products = () => {
                       {filteredProducts && filteredProducts.map((product, index) => (
                           <tr key={product._id}>
                               <td className="border border-gray-300 p-2">{index + 1}</td>
+                              <td className="border border-gray-300 p-2">
+                                  {product.image ? (
+                                      <img
+                                          src={`http://localhost:3000/uploads/${product.image}`}
+                                          alt={product.name}
+                                          style={{ width: '60px', height: '60px', objectFit: 'cover', borderRadius: '8px', cursor: 'pointer' }}
+                                          onClick={() => setModalPreviewImage(`http://localhost:3000/uploads/${product.image}`)}
+                                      />
+                                  ) : (
+                                      <span className="text-gray-400">No Image</span>
+                                  )}
+                              </td>
                               <td className="border border-gray-300 p-2">{product.name}</td>
                               <td className="border border-gray-300 p-2">{product.categoryId.categoryName}</td>
                               <td className="border border-gray-300 p-2">{product.supplierId.name}</td>
@@ -245,6 +295,7 @@ const Products = () => {
                           </tr>
                       ))}
                   </tbody>
+                 
               </table>
               {filteredProducts.length === 0 && <div>No Record</div>}
           </div>
@@ -260,6 +311,21 @@ const Products = () => {
                         X
                         </button>
                       <form className='flex flex-col gap-4 mt-4' onSubmit={handleSubmit}>
+                        {/* gambar */}
+                        <input 
+                            type="file" 
+                            name="image"
+                            accept="image/*"
+                            onChange={handleChange}
+                            className='border p-1 bg-white rounded px-4'
+                        />
+                        {previewImage && (
+                            <img
+                                src={previewImage}
+                                alt="Preview"
+                                style={{ width: '100px', height: '100px', objectFit: 'cover', borderRadius: '8px', marginTop: '8px' }}
+                            />
+                        )}
                           <input
                               type="text"
                               name="name"
@@ -342,8 +408,19 @@ const Products = () => {
                   </div>
               </div>
           )}
+        {/* Modal preview gambar besar */}
+        {modalPreviewImage && (
+            <div className="fixed top-0 left-0 w-full h-full bg-black/60 flex justify-center items-center z-50" onClick={() => setModalPreviewImage(null)}>
+                <div className="bg-white p-4 rounded shadow-md relative" style={{ maxWidth: '80vw', maxHeight: '80vh' }}>
+                    <img src={modalPreviewImage} alt="Preview" style={{ maxWidth: '70vw', maxHeight: '70vh', objectFit: 'contain', borderRadius: '8px' }} />
+                    <button className="absolute top-2 right-2 text-xl font-bold bg-red-500 text-white rounded px-3 py-1" onClick={() => setModalPreviewImage(null)}>
+                        X
+                    </button>
+                </div>
+            </div>
+        )}
     </div>
-  )
+    )
 }
 
 export default Products

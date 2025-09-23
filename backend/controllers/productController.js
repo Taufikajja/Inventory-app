@@ -4,23 +4,37 @@ import Product from '../models/Product.js'
 
 const addProduct = async (req, res) => {
     try {
+        console.log('req.body:', req.body);
+        console.log('req.file:', req.file);
         const { name, description, price, stock, categoryId, supplierId } = req.body;
+        // Validasi field wajib
+        if (!name || !description || !price || !stock || !categoryId || !supplierId) {
+            return res.status(400).json({ success: false, message: 'Semua field wajib diisi.' });
+        }
+        // Ambil path gambar dari upload (jika ada)
+        let imagePath = '';
+        if (req.file) {
+            imagePath = req.file.filename; // hanya nama file, path lengkap: /uploads/filename
+        } else if (req.body.image) {
+            imagePath = req.body.image; // fallback jika dikirim manual
+        }
 
         // create a new product
         const newProduct = new Product({
             name,
-           description,
-           price,
-           stock,
-           categoryId,
-           supplierId,
+            image: imagePath,
+            description,
+            price,
+            stock,
+            categoryId,
+            supplierId,
         });
 
         await newProduct.save();
         return res.status(201).json({ success: true, message: 'Product added successfully' });
     } catch (error) {
         console.error('Error adding product:', error);
-        return res.status(500).json({ success: false, message: "Server error" });
+        return res.status(500).json({ success: false, message: "Server error", error: error.message });
     }
 }
 
@@ -36,14 +50,30 @@ const getProducts = async (req, res) => {
     }
 }
 
+// //baru
+// const getProductById = (req, res) => {
+//     try {
+//         const response
+//     }
+// }
+
 const updateProduct = async (req, res) => {
     try {
+
+
+        console.log('req.body:', req.body);
+        console.log('req.file:', req.file);
         const { id } = req.params;
         const { name, description, price, stock, categoryId, supplierId } = req.body;
+        let imagePath = req.body.image;
+        if (req.file) {
+            imagePath = req.file.filename;
+        }
 
         //update the product
         const updatedProduct = await Product.findByIdAndUpdate(id ,{
             name,
+            image: imagePath,
             description,
             price,
             stock,
