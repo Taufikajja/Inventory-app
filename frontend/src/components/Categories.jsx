@@ -3,7 +3,7 @@ import axios from "axios";
 //  import AOS from 'aos'; 
 //  import 'aos/dist/aos.css'; 
 
-const Categories = () => {
+const Categories = ({ darkMode }) => {
     const [categoryName, setCategoryName] = useState("");
     const [categoryDescription, setCategoryDescription] = useState("");
     const [categories, setCategories] = useState([]);
@@ -124,7 +124,7 @@ if (confirmDelete) {
 
         <div className="flex flex-col lg:flex-row gap-4">
             <div className="lg:w-1/3">
-                <div className="bg-white shadow-md rounded-lg p-4">
+                <div className={`${darkMode ? 'bg-gray-800' : 'primary-light-3'} shadow-md rounded-lg p-4`}>
                         <h2 className="text-center text-xl font-bold mb-4">{editCategory ? "Edit Category" : "Add Category"}</h2>
                 <form className="space-y-4" onSubmit={handleSubmit}>
                     <div>
@@ -145,7 +145,7 @@ if (confirmDelete) {
                     <div className="flex space-x-2">
                     <button 
                     type="submit"
-                    className="w-full mt-2 rounded-md bg-green-500 text-white p-3 cursor-pointer hover:bg-green-700"
+                    className="w-full mt-2 rounded-md bg-blue-700 text-white p-3 cursor-pointer hover:bg-blue-800"
                     >
                         {editCategory ? "Save Changes " : "Add Category"}
                     </button>
@@ -166,29 +166,29 @@ if (confirmDelete) {
             </div>
         </div>
 
-        <div className="lg:w-2/3">
-        <div className="bg-white shadow-md rounded-lg p-4">
+    <div className="lg:w-2/3">
+    <div className={`${darkMode ? 'bg-gray-800' : 'primary-light-3'} shadow-md rounded-lg p-4`}>
         <table className="w-full border-collapse border border-gray-200">
             <thead>
-                <tr className="bg-gray-100">
-                    <th className="border border-gray-200 p-2">No</th>
-                    <th className="border border-gray-200 p-2">Category Name</th>
-                    <th className="border border-gray-200 p-2">Category Description</th>
-                    <th className="border border-gray-200 p-2">Action</th>
+                <tr className="primary-dark-10">
+                    <th className="border  p-2">No</th>
+                    <th className="border  p-2">Category Name</th>
+                    <th className="border  p-2">Category Description</th>
+                    <th className="border  p-2">Action</th>
                 </tr>
             </thead>
 
         <tbody>
             {categories.map((category, index) => (
                 <tr key={category._id || index}>
-                    <td className="border border-gray-200 p-2">{index + 1}</td>
-                    <td className="border border-gray-200 p-2">{category.categoryName}</td>
-                    <td className="border border-gray-200 p-2">{category.categoryDescription}</td>
-                    <td className="border border-gray-200 p-2">
-                        <button className="px-2 py-1 bg-yellow-500 text-white rounded cursor-pointer mr-2" onClick={() => handleEdit(category)}
+                    <td className="border  p-2">{index + 1}</td>
+                    <td className="border  p-2">{category.categoryName}</td>
+                    <td className="border  p-2">{category.categoryDescription}</td>
+                    <td className="border  p-2">
+                        <button className="px-2 py-1 bg-yellow-500 text-white rounded cursor-pointer mr-2 hover:bg-yellow-700 transition" onClick={() => handleEdit(category)}
                             >
                                 Edit</button>
-                        <button className="px-2 py-1 bg-red-500 text-white rounded cursor-pointer mr-2"
+                        <button className="px-2 py-1 bg-red-500 text-white rounded cursor-pointer mr-2 hover:bg-red-700 transition"
                         onClick = {() => handleDelete(category._id)}>Delete</button>
                     </td>
                 </tr>

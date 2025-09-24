@@ -29,10 +29,10 @@ function App() {
   }, [darkMode]);
 
   return (
-    <div className={`font ${darkMode ? 'dark primary-dark-2 text-white' : 'primary-light-1 text-gray-900'}`}>
+    <div className={`font ${darkMode ? 'dark primary-dark-2 text-white' : 'primary-light-1 text-black'}`}>
       <Router>
         {/* Navbar hanya tampil di halaman publik/customer, tidak di admin dashboard */}
-  {window.location.pathname.startsWith('/admin-dashboard') ? null : <Navbar darkMode={darkMode} setDarkMode={setDarkMode} />}
+  {window.location.pathname.startsWith('/admin-dashboard/') ? null : <Navbar darkMode={darkMode} setDarkMode={setDarkMode} />}
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/products" element={<ProductList darkMode={darkMode} />} />
@@ -41,20 +41,20 @@ function App() {
           <Route path="/login" element={<Login darkMode={darkMode} />} />
           
           {/* Admin dashboard routes */}
-          <Route path="/admin-dashboard" element={<ProtectedRoutes requireRole={["admin"]}>
-            <Dashboard />
+          <Route path="/admin-dashboard/" element={<ProtectedRoutes requireRole={["admin"]}>
+            <Dashboard darkMode={darkMode} setDarkMode={setDarkMode} />
           </ProtectedRoutes>
         }>
-            <Route index element={<h1>{<DashboardCpn />}</h1>} />
-            <Route path="categories" element={<Categories />} />
-            <Route path="products" element={<Products />} />
-            <Route path="suppliers" element={<Suppliers />} />
-            <Route path="orders" element={<h1>Orders</h1>} />
-            <Route path="users" element={<Users />} />
-            <Route path="profile" element={<h1>Profile</h1>} />
+            {/* <Route index element={<h1>{<DashboardCpn />}</h1>} /> */}
+              <Route index path="categories" element={<Categories darkMode={darkMode} />} />
+            <Route path="products" element={<Products darkMode={darkMode} />} />
+            <Route path="suppliers" element={<Suppliers darkMode={darkMode} />} />
+            {/* <Route path="orders" element={<h1>Orders</h1>} /> */}
+            <Route path="users" element={<Users darkMode={darkMode} />} />
+            {/* <Route path="profile" element={<h1>Profile</h1>} /> */}
             <Route path="logout" element={<Logout />} />
           </Route>
-          <Route path="/customer-dashboard" element={<h1>customer dashboard</h1>} />
+          {/* <Route path="/customer-dashboard" element={<h1>customer dashboard</h1>} /> */}
           <Route path="/unauthorized" element={<p className='font-bold text-3xl mt-20 ml-20'>Unauthorized</p>} />
         </Routes>
       </Router>

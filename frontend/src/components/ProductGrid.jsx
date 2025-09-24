@@ -20,7 +20,7 @@ const ProductGrid = ({ priceOrder, searchTerm, category, darkMode }) => {
           setProducts(data.products.map(p => ({
             id: p._id,
             name: p.name,
-            image: p.image ? `http://localhost:3000/uploads/${p.image}` : '/vite.svg',
+            image: p.image ? `http://localhost:3000/uploads/${p.image}` : '/logo-black.png',
             price: p.price,
             category: p.categoryId?.categoryName || '-',
             description: p.description,
@@ -54,7 +54,7 @@ const ProductGrid = ({ priceOrder, searchTerm, category, darkMode }) => {
     filteredProducts.sort((a, b) => b.price - a.price);
   }
 
-  if (loading) return <div className="text-center py-8">Loading products...</div>;
+  if (loading) return <div className="text-center py-8">Loading produk...</div>;
   if (error) return <div className="text-center py-8 text-red-500">{error}</div>;
 
   return (

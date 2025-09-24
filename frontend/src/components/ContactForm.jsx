@@ -18,15 +18,15 @@ const ContactForm = ({ darkMode }) => {
       });
       const data = await res.json();
       if (data.success) {
-        setStatus("Message sent successfully.");
+        setStatus("Pesan Berhasil Dikirim.");
         setName("");
         setEmail("");
         setMessage("");
       } else {
-        setStatus(data.message || "Failed to send message.");
+        setStatus(data.message || "Gagal mengirim pesan.");
       }
     } catch (err) {
-      setStatus("Server error. Please try again later.");
+      setStatus("Kesalahan server. Silakan coba lagi nanti.");
     }
   };
 
@@ -39,20 +39,20 @@ const ContactForm = ({ darkMode }) => {
         Contact Form
     </h2>
     <input type="text" 
-           placeholder="Your Name" 
+           placeholder="Masukkan Nama" 
            className="border p-2 rounded" 
            required 
            value={name} 
            onChange={e => setName(e.target.value)} 
     />
     <input type="email" 
-           placeholder="Your Email" 
+           placeholder="Masukkan Email" 
            className="border p-2 rounded" 
            required 
            value={email} 
            onChange={e => setEmail(e.target.value)} 
     />
-    <textarea placeholder="Your Message" 
+    <textarea placeholder="Masukkan Pesan" 
               className="border p-2 rounded" 
               rows={5} 
               required 
@@ -61,7 +61,7 @@ const ContactForm = ({ darkMode }) => {
     />
     <button type="submit" 
             className="bg-blue-600 text-white font-semibold py-2 px-4 rounded hover:bg-blue-700 transition">
-            Send Message
+            Kirim Pesan
     </button>
       {status && <div className="mt-2 text-center text-sm text-blue-100">{status}</div>}
     </form>

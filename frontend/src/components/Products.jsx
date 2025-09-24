@@ -2,7 +2,7 @@ import React, { useEffect, useState} from 'react'
 import axios from 'axios'
 
 
-const Products = () => {
+const Products = ({ darkMode }) => {
     const [ openModal, setOpenModal] = useState(false);
     const [ editProduct, setEditProduct ] = useState(null);
     const [ categories, setCategories] = useState([]);
@@ -226,10 +226,10 @@ const Products = () => {
               <input
                   type="text"
                   placeholder='Search'
-                  className='border p-1 bg-white rounded px-4'
+                  className='border p-1 rounded px-4'
                   onChange={handleSearch}
               />
-              <button className='px-4 py-1.5 bg-blue-500 text-white rounded cursor-pointer'
+              <button className='bg-blue-600 text-white font-semibold py-2 px-4 rounded hover:bg-blue-700 transition'
                   onClick={() => setOpenModal(true)}
                   >
                     Add Product
@@ -239,23 +239,23 @@ const Products = () => {
           <div>
               <table className="w-full border-collapse border border-gray-300 mt-4">
                   <thead>
-                      <tr className="bg-gray-200">
-                          <th className="border border-gray-300 p-2">S No</th>
-                          <th className="border border-gray-300 p-2">Product Image</th>
-                          <th className="border border-gray-300 p-2">Product Name</th>
-                          <th className="border border-gray-300 p-2">Category Name</th>
-                          <th className="border border-gray-300 p-2">Supplier Name</th>
-                          <th className="border border-gray-300 p-2">Price</th>
-                          <th className="border border-gray-300 p-2">Stock</th>
-                          <th className="border border-gray-300 p-2">Action</th>
+                      <tr className="primary-dark-10">
+                          <th className="border p-2">S No</th>
+                          <th className="border p-2">Product Image</th>
+                          <th className="border p-2">Product Name</th>
+                          <th className="border p-2">Category Name</th>
+                          <th className="border p-2">Supplier Name</th>
+                          <th className="border p-2">Price</th>
+                          <th className="border p-2">Stock</th>
+                          <th className="border p-2">Action</th>
 
                       </tr>
                   </thead>
                   <tbody>
                       {filteredProducts && filteredProducts.map((product, index) => (
                           <tr key={product._id}>
-                              <td className="border border-gray-300 p-2">{index + 1}</td>
-                              <td className="border border-gray-300 p-2">
+                              <td className="border  p-2">{index + 1}</td>
+                              <td className="border  p-2">
                                   {product.image ? (
                                       <img
                                           src={`http://localhost:3000/uploads/${product.image}`}
@@ -267,11 +267,11 @@ const Products = () => {
                                       <span className="text-gray-400">No Image</span>
                                   )}
                               </td>
-                              <td className="border border-gray-300 p-2">{product.name}</td>
-                              <td className="border border-gray-300 p-2">{product.categoryId.categoryName}</td>
-                              <td className="border border-gray-300 p-2">{product.supplierId.name}</td>
-                              <td className="border border-gray-300 p-2">Rp.{product.price},00</td>
-                              <td className="border border-gray-300 p-2">
+                              <td className="border  p-2">{product.name}</td>
+                              <td className="border  p-2">{product.categoryId.categoryName}</td>
+                              <td className="border  p-2">{product.supplierId.name}</td>
+                              <td className="border  p-2">Rp.{product.price},00</td>
+                              <td className="border  p-2">
                                 <span className="rounded-full font-semibold">
                                 {product.stock == 0 ? (
                                     <span className="bg-red-100 text-red-500 px-2 py-1 rounded-full">{product.stock}</span>
@@ -282,12 +282,12 @@ const Products = () => {
                                 )}
                                 </span>
                                 </td>
-                              <td className="border border-gray-300 p-2">
-                                  <button className="px-2 py-1 bg-yellow-500 text-white rounded cursor-pointer mr-2"
+                              <td className="border  p-2">
+                                  <button className="px-2 py-1 bg-yellow-500 text-white rounded cursor-pointer mr-2 hover:bg-yellow-700 transition"
                                       onClick={() => handleEdit(product)}>
                                       Edit
                                   </button>
-                                  <button className="px-2 py-1 bg-red-500 text-white rounded cursor-pointer"
+                                  <button className="px-2 py-1 bg-red-500 text-white rounded cursor-pointer mr-2 hover:bg-red-600 transition"
                                       onClick={() => handleDelete(product._id)}>
                                       Delete
                                   </button>
@@ -302,7 +302,7 @@ const Products = () => {
 
           { openModal && (
               <div className='fixed top-0 left-0 w-full h-full bg-black/50 flex justify-center items-center'>
-                  <div className='bg-white p-4 rounded shadow-md w-1/3 relative'>
+                  <div className={`${darkMode ? 'bg-gray-800' : 'primary-light-3'} p-4 rounded shadow-md w-1/3 relative`}>
                       <h1 className='text-xl font-bold'>Add Product</h1>
                       <button 
                       className='absolute top-4 right-4 font-bold text-lg cursor-pointer' 
@@ -317,7 +317,7 @@ const Products = () => {
                             name="image"
                             accept="image/*"
                             onChange={handleChange}
-                            className='border p-1 bg-white rounded px-4'
+                            className='border p-1 rounded px-4'
                         />
                         {previewImage && (
                             <img
@@ -332,7 +332,7 @@ const Products = () => {
                               value={formData.name}
                               onChange={handleChange}
                               placeholder='Product Name'
-                              className='border p-1 bg-white rounded px-4'
+                              className='border p-1 rounded px-4'
                           />
                           <input
                               type="text"
@@ -340,7 +340,7 @@ const Products = () => {
                               value={formData.description}
                               onChange={handleChange}
                               placeholder='Description'
-                              className='border p-1 bg-white rounded px-4'
+                              className='border p-1 rounded px-4'
                           />
                           <input
                               type="number"
@@ -348,7 +348,7 @@ const Products = () => {
                               value={formData.price}
                               onChange={handleChange}
                               placeholder='Enter Price'
-                              className='border p-1 bg-white rounded px-4'
+                              className='border p-1 rounded px-4'
                           />
                           <input
                               type="number"
@@ -357,12 +357,12 @@ const Products = () => {
                               value={formData.stock}
                               onChange={handleChange}
                               placeholder='Enter Stock'
-                              className='border p-1 bg-white rounded px-4'
+                              className='border p-1 rounded px-4'
                           />
 
-                          <div className="w-full border">
-                            <select name="categoryId" className="w-full p-2"
-                            onChange={handleChange} value={formData.categoryId}>
+                          <div className="w-full border rounded p-0.5">
+                              <select name="categoryId" className={`w-full p-2  ${darkMode ? 'bg-gray-800 text-white' : 'primary-light-3 text-black'}`}
+                                                        onChange={handleChange} value={formData.categoryId}>
                                 <option value="">Select Category</option>
                                   {categories && categories.map ((category) => (
                                     <option key={category._id} value={category._id}>
@@ -372,8 +372,8 @@ const Products = () => {
                             </select>
                           </div>
 
-                          <div className="w-full border">
-                              <select name="supplierId" className="w-full p-2"
+                          <div className="w-full border rounded p-0.5">
+                              <select name="supplierId" className={`w-full p-2 ${darkMode ? 'bg-gray-800 text-white' : 'primary-light-3 text-black'}`}
                               onChange={handleChange} value={formData.supplierId}>
                                   <option value="">Select Supplier</option>
                                   {suppliers && suppliers.map ((supplier) => (
@@ -411,7 +411,7 @@ const Products = () => {
         {/* Modal preview gambar besar */}
         {modalPreviewImage && (
             <div className="fixed top-0 left-0 w-full h-full bg-black/60 flex justify-center items-center z-50" onClick={() => setModalPreviewImage(null)}>
-                <div className="bg-white p-4 rounded shadow-md relative" style={{ maxWidth: '80vw', maxHeight: '80vh' }}>
+                <div className={`${darkMode ? 'bg-gray-800' : 'primary-light-3'} p-4 rounded shadow-md relative`} style={{ maxWidth: '80vw', maxHeight: '80vh' }}>
                     <img src={modalPreviewImage} alt="Preview" style={{ maxWidth: '70vw', maxHeight: '70vh', objectFit: 'contain', borderRadius: '8px' }} />
                     <button className="absolute top-2 right-2 text-xl font-bold bg-red-500 text-white rounded px-3 py-1" onClick={() => setModalPreviewImage(null)}>
                         X

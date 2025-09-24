@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from "axios";
 
 
-const Suppliers = () => {
+const Suppliers = ({ darkMode }) => {
 
     const [addModal, setAddModal] = useState(null);
     const [editSupplier, setEditSupplier] = useState(null);
@@ -171,10 +171,10 @@ const Suppliers = () => {
             <input 
             type="text" 
             placeholder='Search' 
-            className='border p-1 bg-white rounded px-4' 
+            className='border p-1 rounded px-4' 
             onChange={handleSearch}
             />
-            <button className='px-4 py-1.5 bg-blue-500 text-white rounded cursor-pointer'
+              <button className='bg-blue-600 text-white font-semibold py-2 px-4 rounded hover:bg-blue-700 transition'
             onClick={() => setAddModal(1)}>Add Supplier</button>
         </div>
 
@@ -182,30 +182,30 @@ const Suppliers = () => {
                 <div>
                 <table className="w-full border-collapse border border-gray-300 mt-4">
                     <thead>
-                        <tr className="bg-gray-200">
-                            <th className="border border-gray-300 p-2">S No</th>
-                            <th className="border border-gray-300 p-2">Supplier Name</th>
-                            <th className="border border-gray-300 p-2">Email</th>
-                            <th className="border border-gray-300 p-2">Phone Number</th>
-                            <th className="border border-gray-300 p-2">Address</th>
-                            <th className="border border-gray-300 p-2">Action</th>
+                          <tr className="primary-dark-10">
+                            <th className="border  p-2">S No</th>
+                            <th className="border  p-2">Supplier Name</th>
+                            <th className="border  p-2">Email</th>
+                            <th className="border  p-2">Phone Number</th>
+                            <th className="border  p-2">Address</th>
+                            <th className="border  p-2">Action</th>
 
                         </tr>
                     </thead>
                     <tbody>
                         {filteredSuppliers.map((supplier, index) => (
                             <tr key={supplier._id}>
-                                <td className="border border-gray-300 p-2">{index + 1}</td>
-                                <td className="border border-gray-300 p-2">{supplier.name}</td>
-                                <td className="border border-gray-300 p-2">{supplier.email}</td>
-                                <td className="border border-gray-300 p-2">{supplier.number}</td>
-                                <td className="border border-gray-300 p-2">{supplier.address}</td>
-                                <td className="border border-gray-300 p-2">
-                                    <button className="px-2 py-1 bg-yellow-500 text-white rounded cursor-pointer mr-2"
+                                <td className="border  p-2">{index + 1}</td>
+                                <td className="border  p-2">{supplier.name}</td>
+                                <td className="border  p-2">{supplier.email}</td>
+                                <td className="border  p-2">{supplier.number}</td>
+                                <td className="border  p-2">{supplier.address}</td>
+                                <td className="border  p-2">
+                                    <button className="px-2 py-1 bg-yellow-500 text-white rounded cursor-pointer mr-2 hover:bg-yellow-700 transition"
                                     onClick={() => handleEdit(supplier)}>
                                         Edit
                                     </button>
-                                    <button className="px-2 py-1 bg-red-500 text-white rounded cursor-pointer"
+                                    <button className="px-2 py-1 bg-red-500 text-white rounded cursor-pointer mr-2 hover:bg-red-700 transition"
                                     onClick={() => handleDelete(supplier._id)}>
                                         Delete
                                     </button>
@@ -218,9 +218,9 @@ const Suppliers = () => {
                 </div>
             )}
 
-          {addModal && (
-              <div className='fixed top-0 left-0 w-full h-full bg-black/50 flex justify-center items-center'>
-                <div className='bg-white p-4 rounded shadow-md w-1/3 relative'>
+                    {addModal && (
+                            <div className='fixed top-0 left-0 w-full h-full bg-black/50 flex justify-center items-center'>
+                                <div className={`${darkMode ? 'bg-gray-800' : 'primary-light-3'} p-4 rounded shadow-md w-1/3 relative`}>
                 <h1 className ='text-xl font-bold'>Add Supplier</h1>
                 <button className='absolute top-4 right-4 font-bold text-lg cursor-pointer' onClick={closeModal}>X</button>
                 <form className='flex flex-col gap-4 mt-4' onSubmit={handleSubmit}>
@@ -230,7 +230,7 @@ const Suppliers = () => {
                     value={formData.name}
                     onChange={handleChange}
                     placeholder='Supplier Name' 
-                    className='border p-1 bg-white rounded px-4'
+                    className='border p-1 rounded px-4'
                     />
                     <input 
                     type="email" 
@@ -238,7 +238,7 @@ const Suppliers = () => {
                     value={formData.email}
                     onChange={handleChange}
                     placeholder='Supplier Email' 
-                    className='border p-1 bg-white rounded px-4'
+                    className='border p-1 rounded px-4'
                     />
                     <input 
                     type="number" 
@@ -246,7 +246,7 @@ const Suppliers = () => {
                     value={formData.number}
                     onChange={handleChange}
                     placeholder='Supplier Phone Number' 
-                    className='border p-1 bg-white rounded px-4' 
+                    className='border p-1 rounded px-4' 
                     />
                     <input 
                     type="text" 
@@ -254,7 +254,7 @@ const Suppliers = () => {
                     value={formData.address}
                     onChange={handleChange}
                     placeholder='Supplier Address' 
-                    className='border p-1 bg-white rounded px-4' 
+                    className='border p-1 rounded px-4' 
                     />
                  
                           <div className="flex space-x-2">

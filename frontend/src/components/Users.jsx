@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import axios from "axios";
 
 
-const Users = () => {
+const Users = ({ darkMode }) => {
     const [formData, setFormData] = useState({
         name : "",
         email : "",
@@ -112,7 +112,7 @@ const Users = () => {
 
             <div className="flex flex-col lg:flex-row gap-4">
                 <div className="lg:w-1/3">
-                    <div className="bg-white shadow-md rounded-lg p-4">
+                    <div className={`${darkMode ? 'bg-gray-800' : 'primary-light-3'} shadow-md rounded-lg p-4`}>
                         <h2 className="text-center text-xl font-bold mb-4">Add User</h2>
                         <form className="space-y-4" onSubmit={handleSubmit}>
                             <div>
@@ -148,17 +148,16 @@ const Users = () => {
                                 />
                             </div>
                             <div>
-                                <select name="role" className="border w-full p-2 rounded-md" onChange={handleChange}>
+                                <select name="role" className={`border w-full p-2 rounded p-1 ${darkMode ? 'bg-gray-800 text-white' : 'primary-light-3 text-black'}`} onChange={handleChange}>
                                     <option value="">Select Role</option>
                                     <option value="admin">Admin</option>
-                                    <option value="customer">Customer</option>
                                 </select>
                             </div>
 
                             <div className="flex space-x-2">
                                 <button
                                     type="submit"
-                                    className="w-full mt-2 rounded-md bg-green-500 text-white p-3 cursor-pointer hover:bg-green-700"
+                                    className="w-full mt-2 rounded-md bg-blue-700 text-white p-3 cursor-pointer hover:bg-blue-800"
                                 >
                                    Add User
                                 </button>
@@ -170,38 +169,38 @@ const Users = () => {
 
                 <div className="lg:w-2/3">
                 
-                    <input type="text" placeholder="Search" className="p-2 bg-white w-full mb-4 rounded" onChange={handleSearch} />
-                    <div className="bg-white shadow-md rounded-lg p-4">
+                    <input type="text" placeholder="Search" className="border p-2 w-full mb-4 rounded" onChange={handleSearch} />
+                    <div className={`${darkMode ? 'bg-gray-800' : 'primary-light-3'} shadow-md rounded-lg p-4`}>
                         <table className="w-full border-collapse border border-gray-200">
                             <thead>
-                                <tr className="bg-gray-100">
-                                    <th className="border border-gray-200 p-2">No</th>
-                                    <th className="border border-gray-200 p-2">Name</th>
-                                    <th className="border border-gray-200 p-2">Email</th>
-                                    <th className="border border-gray-200 p-2">Address</th>
-                                    <th className="border border-gray-200 p-2">Role</th>
-                                    <th className="border border-gray-200 p-2">Action</th>
+                                <tr className="primary-dark-10">
+                                    <th className="border  p-2">No</th>
+                                    <th className="border  p-2">Name</th>
+                                    <th className="border  p-2">Email</th>
+                                    <th className="border  p-2">Address</th>
+                                    <th className="border  p-2">Role</th>
+                                    <th className="border  p-2">Action</th>
                                 </tr>
                             </thead>
 
                             <tbody>
                                 {filteredUsers && filteredUsers.map((user, index) => (
                                     <tr key={index}>
-                                        <td className="border border-gray-200 p-2">{index + 1}</td>
-                                        <td className="border border-gray-200 p-2">
+                                        <td className="border  p-2">{index + 1}</td>
+                                        <td className="border  p-2">
                                         {user.name}
                                         </td>
-                                        <td className="border border-gray-200 p-2">
+                                        <td className="border  p-2">
                                         {user.email}
                                         </td>
-                                        <td className="border border-gray-200 p-2">
+                                        <td className="border  p-2">
                                             {user.address}
                                         </td>
-                                        <td className="border border-gray-200 p-2">
+                                        <td className="border  p-2">
                                             {user.role}
                                         </td>
-                                        <td className="border border-gray-200 p-2">
-                                            <button className="px-2 py-1 bg-red-500 text-white rounded cursor-pointer mr-2"
+                                        <td className="border  p-2">
+                                            <button className="px-2 py-1 bg-red-500 text-white rounded cursor-pointer mr-2 hover:bg-red-700 transition"
                                                 onClick={() => handleDelete(user._id)}>Delete</button>
                                         </td>
                                     </tr>

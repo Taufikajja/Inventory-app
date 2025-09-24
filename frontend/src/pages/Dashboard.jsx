@@ -3,18 +3,16 @@ import Sidebar from '../components/Sidebar'
 import {Outlet} from 'react-router'
 
 
-const Dashboard = () => {
+const Dashboard = ({ darkMode, setDarkMode }) => {
 
   return (
     <div>
         <div className='flex'>
-            <Sidebar />
+            <Sidebar darkMode={darkMode} setDarkMode={setDarkMode} />
 
-            <div className='flex-1 ml-65 bg-gray-100 min-h-screen'>
-                <Outlet />
-            
-
-        </div>
+        <div className={`flex-1 ml-16 md:ml-64 min-h-screen ${darkMode ? 'dark primary-dark-2 text-white' : 'primary-light-1 text-black'}`}>
+        <Outlet />
+      </div>
       </div>
     </div>
   )

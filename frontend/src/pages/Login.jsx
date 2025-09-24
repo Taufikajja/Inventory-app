@@ -31,7 +31,7 @@ const Login = ({ darkMode }) => {
         if (data.success) {
             await login(data.user, data.token);
             if (data.user.role === "admin") {
-                navigate("/admin-dashboard");
+                navigate("/admin-dashboard/categories");
             } else {
                 navigate("/customer-dashboard");
             }
@@ -74,10 +74,10 @@ const Login = ({ darkMode }) => {
                     </input>
                 </div>
                 <div className="mb-4">
-                    <label className="block text-gray-700">Password</label>
+                    <label>Password</label>
                     <input 
                     type="password" 
-                    className="w-full px-3 py-2 border" 
+                    className="w-full px-3 py-2 border rounded" 
                     name="password" 
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="Masukan Password"
@@ -88,7 +88,7 @@ const Login = ({ darkMode }) => {
                 type="submit"
                             className="w-full bg-blue-600 text-white font-semibold py-2 px-4 rounded hover:bg-blue-700 transition "
                 >
-                    {loading ? "Loading..." : "Login"}
+                    {loading ? "Loading..." : "Masuk"}
                 </button>
                 </div>
             </form>
