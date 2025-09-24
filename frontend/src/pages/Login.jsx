@@ -3,7 +3,7 @@ import {useAuth} from "../context/AuthContext";
 import {useNavigate} from "react-router";
 import axios from 'axios';
 
-const Login = () => {
+const Login = ({ darkMode }) => {
     const [ email,setEmail ] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState(null);
@@ -49,25 +49,27 @@ const Login = () => {
     
 
     return(
-        <div className="flex flex-col items-center h-screen justify-center bg-gradient-to-br from-blue-400 via-blue-500 to-blue-700 space-y-6">
-            <h2 className="text-3xl text-white">Inventory</h2>
-            <div className="border shadow-lg p-6 w-80 bg-white">
-                <h2 className="text-2xl font-bold mb-4">Login</h2>
+        <div className="min-h-screen bg-base-100 text-base-content">
+            <div className="container mx-auto py-20">
+                <form className={`max-w-lg mx-auto rounded-lg shadow p-8 flex flex-col gap-4 ${darkMode ? '  bg-gray-800 text-white ' : ' primary-light-6 text-black'}`} 
+                      onSubmit={handleSubmit}>
+                    <h2 className="text-2xl font-bold mb-4 text-center">
+                        Login
+                    </h2>
                 {error && (
                     <div className= "bg-red-200 text-red-700 p-2 mb-4 rounded">
                         {error}
                     </div>
                 )}
-
-            <form onSubmit={handleSubmit}>
+                
                 <div className="mb-4">
-                    <label className="block text-gray-700">Email</label>
+                    <label>Email</label>
                     <input 
                     type="email" 
-                    className="w-full px-3 py-2 border" 
+                    className="w-full px-3 py-2 border rounded" 
                     name="email" 
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="Enter Email"
+                    placeholder="Masukan Email"
                     required>
                     </input>
                 </div>
@@ -78,13 +80,13 @@ const Login = () => {
                     className="w-full px-3 py-2 border" 
                     name="password" 
                     onChange={(e) => setPassword(e.target.value)}
-                    placeholder="Enter Password"
+                    placeholder="Masukan Password"
                     required></input>
                 </div>
                 <div className="mb-4">
                 <button 
                 type="submit"
-                className="w-full bg-cyan-600 text-white py-2"
+                            className="w-full bg-blue-600 text-white font-semibold py-2 px-4 rounded hover:bg-blue-700 transition "
                 >
                     {loading ? "Loading..." : "Login"}
                 </button>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ProductDetailCard from './ProductDetailCard';
 
-const ProductGrid = ({ priceOrder, searchTerm, category }) => {
+const ProductGrid = ({ priceOrder, searchTerm, category, darkMode }) => {
   const [products, setProducts] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -63,22 +63,22 @@ const ProductGrid = ({ priceOrder, searchTerm, category }) => {
         {filteredProducts.map((product) => (
           <div
             key={product.id}
-            className="bg-white dark:bg-gray-800 rounded-lg shadow p-6 flex flex-col items-center cursor-pointer hover:scale-105 transition"
+            className={`${darkMode ? 'bg-gray-800 text-white' : 'primary-light-3 text-black'} rounded-lg shadow p-6 flex flex-col items-center cursor-pointer hover:scale-105 transition`}
             onClick={() => setSelectedProduct(product)}
           >
             <img src={product.image} alt={product.name} className="w-32 h-32 object-cover mb-4" />
             <h3 className="text-lg font-semibold mb-2">{product.name}</h3>
-            <span className="font-bold text-blue-600 dark:text-blue-400">Rp. {product.price.toLocaleString()}</span>
+            <span className="font-bold text-blue-100">Rp. {product.price.toLocaleString()}</span>
           </div>
         ))}
       </div>
       {selectedProduct && (
         <div className="fixed top-0 left-0 w-full h-full bg-black/60 flex justify-center items-center z-50" onClick={() => setSelectedProduct(null)}>
-          <div className="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg relative max-w-2xl w-full" onClick={e => e.stopPropagation()}>
+          <div className={`${darkMode ? 'primary-light-1 text-white' : 'primary-dark-2 text-white'} p-0.5 rounded-lg shadow-lg relative max-w-2xl w-full`} onClick={e => e.stopPropagation()}>
             <button className="absolute top-4 right-4 text-xl font-bold bg-red-500 text-white rounded px-3 py-1" onClick={() => setSelectedProduct(null)}>
               X
             </button>
-            <ProductDetailCard product={selectedProduct} />
+            <ProductDetailCard product={selectedProduct} darkMode={darkMode} />
           </div>
         </div>
       )}

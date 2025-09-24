@@ -15,28 +15,31 @@ import LandingPage from './pages/LandingPage';
 import ProductList from './pages/ProductList';
 import ProductDetail from './pages/ProductDetail';
 import Contact from './pages/Contact';
-import React, { useState, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 
 
 function App() {
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(() => {
+    const stored = localStorage.getItem('darkMode');
+    return stored ? JSON.parse(stored) : true;
+  });
+
+  useEffect(() => {
+    localStorage.setItem('darkMode', JSON.stringify(darkMode));
+  }, [darkMode]);
+
   return (
-    <div className={darkMode ? 'dark bg-gray-900 text-white' : 'bg-white text-gray-900'}>
+    <div className={`font ${darkMode ? 'dark primary-dark-2 text-white' : 'primary-light-1 text-gray-900'}`}>
       <Router>
         {/* Navbar hanya tampil di halaman publik/customer, tidak di admin dashboard */}
-        {window.location.pathname.startsWith('/admin-dashboard') ? null : <Navbar />}
-        <button
-          className="fixed bottom-4 right-4 px-4 py-2 rounded bg-base-300 text-base-content shadow"
-          onClick={() => setDarkMode((prev) => !prev)}
-        >
-          {darkMode ? 'Light Mode' : 'Dark Mode'}
-        </button>
+  {window.location.pathname.startsWith('/admin-dashboard') ? null : <Navbar darkMode={darkMode} setDarkMode={setDarkMode} />}
         <Routes>
           <Route path="/" element={<LandingPage />} />
-          <Route path="/products" element={<ProductList />} />
+          <Route path="/products" element={<ProductList darkMode={darkMode} />} />
           <Route path="/products/:id" element={<ProductDetail />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/contact" element={<Contact darkMode={darkMode} />} />
+          <Route path="/login" element={<Login darkMode={darkMode} />} />
+          
           {/* Admin dashboard routes */}
           <Route path="/admin-dashboard" element={<ProtectedRoutes requireRole={["admin"]}>
             <Dashboard />

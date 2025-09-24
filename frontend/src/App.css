@@ -1,1 +1,70 @@
 @import "tailwindcss";
+
+.font { font-family: 'Inter', sans-serif; }
+
+/* Primary Light */
+.primary-light-1 { background-color: #fff; }
+.primary-light-2 { background-color: #fdfdfe; }
+.primary-light-3 { background-color: #f7f9ff; }
+.primary-light-4 { background-color: #edf2fe; }
+.primary-light-5 { background-color: #dfeaff; }
+.primary-light-6 { background-color: #d0dfff; }
+.primary-light-7 { background-color: #bdd1ff; }
+.primary-light-8 { background-color: #a6bff9; }
+.primary-light-9 { background-color: #87a5ef; }
+.primary-light-10 { background-color: #3d63dd; }
+.primary-light-11 { background-color: #3657c3; }
+.primary-light-12 { background-color: #395bc7; }
+.primary-light-13 { background-color: #1d2e5c; }
+
+/* Primary Dark */
+.primary-dark { background-color: #2d3748;}
+.primary-dark-1 { background-color: #3d63dd; }
+.primary-dark-2 { background-color: #1d222e; }
+.primary-dark-3 { background-color: #1e2534; }
+.primary-dark-4 { background-color: #233157; }
+.primary-dark-5 { background-color: #273a6f; }
+.primary-dark-6 { background-color: #2e4480; }
+.primary-dark-7 { background-color: #364d8e; }
+.primary-dark-8 { background-color: #3e58a0; }
+.primary-dark-9 { background-color: #4664b8; }
+.primary-dark-10 { background-color: #3d63dd; }
+.primary-dark-11 { background-color: #3154cd; }
+.primary-dark-12 { background-color: #94b5ff; }
+.primary-dark-13 { background-color: #d5e2ff; }
+
+/* Body Light */
+.body-light-1 { background-color: #fcfcfd; }
+.body-light-2 { background-color: #f9f9fb; }
+.body-light-3 { background-color: #eff0f3; }
+.body-light-4 { background-color: #e7e8ec; }
+.body-light-5 { background-color: #e0e1e6; }
+.body-light-6 { background-color: #d8d9e0; }
+.body-light-7 { background-color: #cdced7; }
+.body-light-8 { background-color: #b9bbc6; }
+.body-light-9 { background-color: #8b8d98; }
+.body-light-10 { background-color: #80828d; }
+.body-light-11 { background-color: #62636c; }
+.body-light-12 { background-color: #1e1f24; }
+
+/* Body Dark */
+.body-dark-1 { background-color: #212224; }
+.body-dark-2 { background-color: #28292b; }
+.body-dark-3 { background-color: #303134; }
+.body-dark-4 { background-color: #36373b; }
+.body-dark-5 { background-color: #3c3d42; }
+.body-dark-6 { background-color: #43444a; }
+.body-dark-7 { background-color: #4f5058; }
+.body-dark-8 { background-color: #666872; }
+.body-dark-9 { background-color: #72747f; }
+.body-dark-10 { background-color: #7d7f8a; }
+.body-dark-11 { background-color: #b4b6bf; }
+.body-dark-12 { background-color: #eeeef0; }
+
+/* Border Color */
+.bc-light { background-color: #00073527 }
+.bc-dark { background-color: #00073527 }
+
+/* Box Shadow */
+.card-1 { background-color: 0px 0px 40px 0px rgba(0, 0, 0, 0.08) }
+.card-2 { background-color: 0px 10px 20px 0 rgba(0, 0, 0, 0.08) }
