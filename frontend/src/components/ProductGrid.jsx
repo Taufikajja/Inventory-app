@@ -67,8 +67,8 @@ const ProductGrid = ({ priceOrder, searchTerm, category, darkMode }) => {
             onClick={() => setSelectedProduct(product)}
           >
             <img src={product.image} alt={product.name} className="w-32 h-32 object-cover mb-4" />
-            <h3 className="text-lg font-semibold mb-2">{product.name}</h3>
-            <span className="font-bold text-blue-100">Rp. {product.price.toLocaleString()}</span>
+            <h3 className="text-lg font-bold mb-2">{product.name}</h3>
+            <span className="font-bold text-blue-700">Rp. {product.price.toLocaleString()}</span>
           </div>
         ))}
       </div>

@@ -166,16 +166,16 @@ const Suppliers = ({ darkMode }) => {
 
   return (
    <div className = 'w-full h-full flex flex-col gap-4 p-4'>
-        <h1 className = 'text-2xl font-bold'>Suppliers Management</h1>
+        <h1 className = 'text-2xl font-bold'>Manajemen Supplier</h1>
         <div className= 'flex justify-between items-center'>
             <input 
             type="text" 
-            placeholder='Search' 
+            placeholder='Cari Supplier' 
             className='border p-1 rounded px-4' 
             onChange={handleSearch}
             />
               <button className='bg-blue-600 text-white font-semibold py-2 px-4 rounded hover:bg-blue-700 transition'
-            onClick={() => setAddModal(1)}>Add Supplier</button>
+            onClick={() => setAddModal(1)}>Tambah Supplier</button>
         </div>
 
             {loading ? <div>Loading ....</div> : (
@@ -183,12 +183,12 @@ const Suppliers = ({ darkMode }) => {
                 <table className="w-full border-collapse border border-gray-300 mt-4">
                     <thead>
                           <tr className="primary-dark-10">
-                            <th className="border  p-2">S No</th>
-                            <th className="border  p-2">Supplier Name</th>
+                            <th className="border  p-2">No</th>
+                            <th className="border  p-2">Nama</th>
                             <th className="border  p-2">Email</th>
-                            <th className="border  p-2">Phone Number</th>
-                            <th className="border  p-2">Address</th>
-                            <th className="border  p-2">Action</th>
+                            <th className="border  p-2">Nomor Telepon</th>
+                            <th className="border  p-2">Alamat</th>
+                            <th className="border  p-2">Aksi</th>
 
                         </tr>
                     </thead>
@@ -203,25 +203,25 @@ const Suppliers = ({ darkMode }) => {
                                 <td className="border  p-2">
                                     <button className="px-2 py-1 bg-yellow-500 text-white rounded cursor-pointer mr-2 hover:bg-yellow-700 transition"
                                     onClick={() => handleEdit(supplier)}>
-                                        Edit
+                                        Ubah
                                     </button>
                                     <button className="px-2 py-1 bg-red-500 text-white rounded cursor-pointer mr-2 hover:bg-red-700 transition"
                                     onClick={() => handleDelete(supplier._id)}>
-                                        Delete
+                                        Hapus
                                     </button>
                                 </td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
-                {filteredSuppliers.length === 0 && <div>No Record</div>}
+                {filteredSuppliers.length === 0 && <div>Data tidak ada</div>}
                 </div>
             )}
 
                     {addModal && (
                             <div className='fixed top-0 left-0 w-full h-full bg-black/50 flex justify-center items-center'>
                                 <div className={`${darkMode ? 'bg-gray-800' : 'primary-light-3'} p-4 rounded shadow-md w-1/3 relative`}>
-                <h1 className ='text-xl font-bold'>Add Supplier</h1>
+                <h1 className ='text-xl font-bold'>Tambah Supplier</h1>
                 <button className='absolute top-4 right-4 font-bold text-lg cursor-pointer' onClick={closeModal}>X</button>
                 <form className='flex flex-col gap-4 mt-4' onSubmit={handleSubmit}>
                     <input 
@@ -229,7 +229,7 @@ const Suppliers = ({ darkMode }) => {
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
-                    placeholder='Supplier Name' 
+                    placeholder='Nama' 
                     className='border p-1 rounded px-4'
                     />
                     <input 
@@ -237,7 +237,7 @@ const Suppliers = ({ darkMode }) => {
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    placeholder='Supplier Email' 
+                    placeholder='Email' 
                     className='border p-1 rounded px-4'
                     />
                     <input 
@@ -245,7 +245,7 @@ const Suppliers = ({ darkMode }) => {
                     name="number"
                     value={formData.number}
                     onChange={handleChange}
-                    placeholder='Supplier Phone Number' 
+                    placeholder='Nomor Telepon' 
                     className='border p-1 rounded px-4' 
                     />
                     <input 
@@ -253,7 +253,7 @@ const Suppliers = ({ darkMode }) => {
                     name="address"
                     value={formData.address}
                     onChange={handleChange}
-                    placeholder='Supplier Address' 
+                    placeholder='Alamat' 
                     className='border p-1 rounded px-4' 
                     />
                  
@@ -262,7 +262,7 @@ const Suppliers = ({ darkMode }) => {
                                   type="submit"
                                   className="w-full mt-2 rounded-md bg-green-500 text-white p-3 cursor-pointer hover:bg-green-700"
                               >
-                                  {editSupplier ? "Save Changes " : "Add Supplier"}
+                                  {editSupplier ? "Simpan Perubahan" : "Tambah Supplier"}
                               </button>
                               {
                                   editSupplier && (
@@ -271,7 +271,7 @@ const Suppliers = ({ darkMode }) => {
                                           className="w-full mt-2 rounded-md bg-red-500 text-white p-3 cursor-pointer hover:bg-red-600"
                                           onClick={closeModal}
                                       >
-                                          Cancel
+                                          Batal
                                       </button>
                                   )
                               }

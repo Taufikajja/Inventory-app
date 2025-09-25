@@ -221,18 +221,18 @@ const Products = ({ darkMode }) => {
 
   return (
       <div className='w-full h-full flex flex-col gap-4 p-4'>
-          <h1 className='text-2xl font-bold'>Product Management</h1>
+          <h1 className='text-2xl font-bold'>Manajemen Produk</h1>
           <div className='flex justify-between items-center'>
               <input
                   type="text"
-                  placeholder='Search'
+                  placeholder='Cari Produk'
                   className='border p-1 rounded px-4'
                   onChange={handleSearch}
               />
               <button className='bg-blue-600 text-white font-semibold py-2 px-4 rounded hover:bg-blue-700 transition'
                   onClick={() => setOpenModal(true)}
                   >
-                    Add Product
+                    Tambah Produk
                   </button>
           </div>
 
@@ -240,14 +240,14 @@ const Products = ({ darkMode }) => {
               <table className="w-full border-collapse border border-gray-300 mt-4">
                   <thead>
                       <tr className="primary-dark-10">
-                          <th className="border p-2">S No</th>
-                          <th className="border p-2">Product Image</th>
-                          <th className="border p-2">Product Name</th>
-                          <th className="border p-2">Category Name</th>
-                          <th className="border p-2">Supplier Name</th>
-                          <th className="border p-2">Price</th>
-                          <th className="border p-2">Stock</th>
-                          <th className="border p-2">Action</th>
+                          <th className="border p-2">No</th>
+                          <th className="border p-2">Nama Produk</th>
+                          <th className="border p-2">Gambar Produk</th>
+                          <th className="border p-2">Nama Kategori</th>
+                          <th className="border p-2">Nama Supplier</th>
+                          <th className="border p-2">Harga</th>
+                          <th className="border p-2">Stok</th>
+                          <th className="border p-2">Aksi</th>
 
                       </tr>
                   </thead>
@@ -255,6 +255,7 @@ const Products = ({ darkMode }) => {
                       {filteredProducts && filteredProducts.map((product, index) => (
                           <tr key={product._id}>
                               <td className="border  p-2">{index + 1}</td>
+                              <td className="border  p-2">{product.name}</td>
                               <td className="border  p-2">
                                   {product.image ? (
                                       <img
@@ -264,10 +265,9 @@ const Products = ({ darkMode }) => {
                                           onClick={() => setModalPreviewImage(`http://localhost:3000/uploads/${product.image}`)}
                                       />
                                   ) : (
-                                      <span className="text-gray-400">No Image</span>
+                                      <span className="text-gray-400">Tidak ada gambar</span>
                                   )}
                               </td>
-                              <td className="border  p-2">{product.name}</td>
                               <td className="border  p-2">{product.categoryId.categoryName}</td>
                               <td className="border  p-2">{product.supplierId.name}</td>
                               <td className="border  p-2">Rp.{product.price},00</td>
@@ -285,11 +285,11 @@ const Products = ({ darkMode }) => {
                               <td className="border  p-2">
                                   <button className="px-2 py-1 bg-yellow-500 text-white rounded cursor-pointer mr-2 hover:bg-yellow-700 transition"
                                       onClick={() => handleEdit(product)}>
-                                      Edit
+                                      Ubah
                                   </button>
                                   <button className="px-2 py-1 bg-red-500 text-white rounded cursor-pointer mr-2 hover:bg-red-600 transition"
                                       onClick={() => handleDelete(product._id)}>
-                                      Delete
+                                      Hapus
                                   </button>
                               </td>
                           </tr>
@@ -297,13 +297,13 @@ const Products = ({ darkMode }) => {
                   </tbody>
                  
               </table>
-              {filteredProducts.length === 0 && <div>No Record</div>}
+              {filteredProducts.length === 0 && <div>Data tidak ada</div>}
           </div>
 
           { openModal && (
               <div className='fixed top-0 left-0 w-full h-full bg-black/50 flex justify-center items-center'>
                   <div className={`${darkMode ? 'bg-gray-800' : 'primary-light-3'} p-4 rounded shadow-md w-1/3 relative`}>
-                      <h1 className='text-xl font-bold'>Add Product</h1>
+                      <h1 className='text-xl font-bold'>Tambah Produk</h1>
                       <button 
                       className='absolute top-4 right-4 font-bold text-lg cursor-pointer' 
                       onClick={closeModel}
@@ -311,6 +311,15 @@ const Products = ({ darkMode }) => {
                         X
                         </button>
                       <form className='flex flex-col gap-4 mt-4' onSubmit={handleSubmit}>
+                          <input
+                              type="text"
+                              name="name"
+                              value={formData.name}
+                              onChange={handleChange}
+                              placeholder='Nama'
+                              className='border p-1 rounded px-4'
+                          />
+
                         {/* gambar */}
                         <input 
                             type="file" 
@@ -326,20 +335,13 @@ const Products = ({ darkMode }) => {
                                 style={{ width: '100px', height: '100px', objectFit: 'cover', borderRadius: '8px', marginTop: '8px' }}
                             />
                         )}
-                          <input
-                              type="text"
-                              name="name"
-                              value={formData.name}
-                              onChange={handleChange}
-                              placeholder='Product Name'
-                              className='border p-1 rounded px-4'
-                          />
+        
                           <input
                               type="text"
                               name="description"
                               value={formData.description}
                               onChange={handleChange}
-                              placeholder='Description'
+                              placeholder='Deskripsi'
                               className='border p-1 rounded px-4'
                           />
                           <input
@@ -347,7 +349,7 @@ const Products = ({ darkMode }) => {
                               name="price"
                               value={formData.price}
                               onChange={handleChange}
-                              placeholder='Enter Price'
+                              placeholder='Harga'
                               className='border p-1 rounded px-4'
                           />
                           <input
@@ -356,14 +358,14 @@ const Products = ({ darkMode }) => {
                               min="0"
                               value={formData.stock}
                               onChange={handleChange}
-                              placeholder='Enter Stock'
+                              placeholder='Stok'
                               className='border p-1 rounded px-4'
                           />
 
                           <div className="w-full border rounded p-0.5">
                               <select name="categoryId" className={`w-full p-2  ${darkMode ? 'bg-gray-800 text-white' : 'primary-light-3 text-black'}`}
                                                         onChange={handleChange} value={formData.categoryId}>
-                                <option value="">Select Category</option>
+                                <option value="">Pilih Kategori</option>
                                   {categories && categories.map ((category) => (
                                     <option key={category._id} value={category._id}>
                                           {category.categoryName}
@@ -375,7 +377,7 @@ const Products = ({ darkMode }) => {
                           <div className="w-full border rounded p-0.5">
                               <select name="supplierId" className={`w-full p-2 ${darkMode ? 'bg-gray-800 text-white' : 'primary-light-3 text-black'}`}
                               onChange={handleChange} value={formData.supplierId}>
-                                  <option value="">Select Supplier</option>
+                                  <option value="">Pilih Supplier</option>
                                   {suppliers && suppliers.map ((supplier) => (
                                   <option key={supplier._id} value={supplier._id}>
                                       {supplier.name}
@@ -390,7 +392,7 @@ const Products = ({ darkMode }) => {
                                   type="submit"
                                   className="w-full mt-2 rounded-md bg-green-500 text-white p-3 cursor-pointer hover:bg-green-700"
                               >
-                                  {editProduct ? "Save Changes" : "Add Product"}
+                                  {editProduct ? "Simpan Perubahan" : "Tambah Produk"}
                               </button>
                             
                     
@@ -399,7 +401,7 @@ const Products = ({ darkMode }) => {
                                           className="w-full mt-2 rounded-md bg-red-500 text-white p-3 cursor-pointer hover:bg-red-600"
                                           onClick={closeModel}
                                       >
-                                          Cancel
+                                          Batal
                                       </button>
                             
 

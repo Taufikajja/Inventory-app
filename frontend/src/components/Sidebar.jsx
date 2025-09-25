@@ -38,10 +38,10 @@ const Sidebar = ({ darkMode, setDarkMode }) => {
                                                                 end={item.isParent}
                                                                 className={({ isActive }) =>
                                                                     (isActive
-                                                                        ? (darkMode ? 'bg-green-700' : 'bg-blue-600')
+                                                                        ? (darkMode ? 'primary-dark-9' : 'primary-light-3')
                                                                         : '') +
                                                                     ' flex items-center p-2 rounded-md ' +
-                                                                    (darkMode ? 'hover:bg-green-700' : 'hover:bg-blue-600') +
+                                                                    (darkMode ? 'hover:primary-dark-9' : 'hover:primary-light-3') +
                                                                     ' transition duration-200'
                                                                 }
                                                                 to={item.path} >

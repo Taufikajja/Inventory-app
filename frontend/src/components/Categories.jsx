@@ -120,23 +120,23 @@ if (confirmDelete) {
     if(loading) return <div>Loading ....</div>
     return (
     <div className="p-4">
-        <h1 className="text-2xl font-bold mb-8">Category Management</h1>
+        <h1 className="text-2xl font-bold mb-8">Manajemen Kategori</h1>
 
         <div className="flex flex-col lg:flex-row gap-4">
             <div className="lg:w-1/3">
                 <div className={`${darkMode ? 'bg-gray-800' : 'primary-light-3'} shadow-md rounded-lg p-4`}>
-                        <h2 className="text-center text-xl font-bold mb-4">{editCategory ? "Edit Category" : "Add Category"}</h2>
+                        <h2 className="text-center text-xl font-bold mb-4">{editCategory ? "Ubah Kategori" : "Tambah Kategori"}</h2>
                 <form className="space-y-4" onSubmit={handleSubmit}>
                     <div>
                       <input type="text" 
-                      placeholder="Category Name" 
+                      placeholder="Nama Kategori" 
                       value={categoryName}
                       className="border w-full p-2 rounded-md"
                       onChange={(e) => setCategoryName(e.target.value)} />
                     </div>
                     <div>
                       <input type="text" 
-                      placeholder="Category Description" 
+                      placeholder="Deskripsi Kategori" 
                       value={categoryDescription}
                       className="border w-full p-2 rounded-md" 
                      onChange={(e) => setCategoryDescription(e.target.value)} />
@@ -147,7 +147,7 @@ if (confirmDelete) {
                     type="submit"
                     className="w-full mt-2 rounded-md bg-blue-700 text-white p-3 cursor-pointer hover:bg-blue-800"
                     >
-                        {editCategory ? "Save Changes " : "Add Category"}
+                        {editCategory ? "Simpan Perubahan" : "Tambah Kategori"}
                     </button>
                     {
                         editCategory && (
@@ -156,7 +156,7 @@ if (confirmDelete) {
                             className="w-full mt-2 rounded-md bg-red-500 text-white p-3 cursor-pointer hover:bg-red-600"
                             onClick={handleCancel}
                             >
-                                Cancel
+                                Batal
                             </button>
                         )
                     }
@@ -172,9 +172,9 @@ if (confirmDelete) {
             <thead>
                 <tr className="primary-dark-10">
                     <th className="border  p-2">No</th>
-                    <th className="border  p-2">Category Name</th>
-                    <th className="border  p-2">Category Description</th>
-                    <th className="border  p-2">Action</th>
+                    <th className="border  p-2">Nama Kategori</th>
+                    <th className="border  p-2">Deskripsi Kategori</th>
+                    <th className="border  p-2">Aksi</th>
                 </tr>
             </thead>
 
@@ -187,9 +187,9 @@ if (confirmDelete) {
                     <td className="border  p-2">
                         <button className="px-2 py-1 bg-yellow-500 text-white rounded cursor-pointer mr-2 hover:bg-yellow-700 transition" onClick={() => handleEdit(category)}
                             >
-                                Edit</button>
+                                Ubah</button>
                         <button className="px-2 py-1 bg-red-500 text-white rounded cursor-pointer mr-2 hover:bg-red-700 transition"
-                        onClick = {() => handleDelete(category._id)}>Delete</button>
+                        onClick = {() => handleDelete(category._id)}>Hapus</button>
                     </td>
                 </tr>
             ))}

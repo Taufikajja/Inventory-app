@@ -9,7 +9,7 @@ const ProductList = ({ darkMode }) => {
   return (
     <div className="min-h-screen bg-base-100 text-base-content">
       <div className="container mx-auto py-8">
-        <ProductFilters onPriceFilter={setPriceOrder} onSearch={setSearchTerm} onCategory={setCategory} />
+  <ProductFilters onPriceFilter={setPriceOrder} onSearch={setSearchTerm} onCategory={setCategory} darkMode={darkMode} />
   <ProductGrid priceOrder={priceOrder} searchTerm={searchTerm} category={category} darkMode={darkMode} />
       </div>
     </div>

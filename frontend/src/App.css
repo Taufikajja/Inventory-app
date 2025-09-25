@@ -68,3 +68,12 @@
 /* Box Shadow */
 .card-1 { background-color: 0px 0px 40px 0px rgba(0, 0, 0, 0.08) }
 .card-2 { background-color: 0px 10px 20px 0 rgba(0, 0, 0, 0.08) }
+
+/* hover */
+.hover\:primary-dark-9:hover {
+    background-color: #4664b8;
+}
+
+.hover\:primary-light-3:hover {
+    background-color: #f7f9ff;
+}

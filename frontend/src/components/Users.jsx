@@ -108,16 +108,16 @@ const Users = ({ darkMode }) => {
     if (loading) return <div>Loading ....</div>
     return (
         <div className="p-4">
-            <h1 className="text-2xl font-bold mb-8">User Management</h1>
+            <h1 className="text-2xl font-bold mb-8">Manajemen User</h1>
 
             <div className="flex flex-col lg:flex-row gap-4">
                 <div className="lg:w-1/3">
                     <div className={`${darkMode ? 'bg-gray-800' : 'primary-light-3'} shadow-md rounded-lg p-4`}>
-                        <h2 className="text-center text-xl font-bold mb-4">Add User</h2>
+                        <h2 className="text-center text-xl font-bold mb-4">Tambah User</h2>
                         <form className="space-y-4" onSubmit={handleSubmit}>
                             <div>
                                 <input type="text"
-                                    placeholder="Enter Name"
+                                    placeholder="Nama"
                                     name="name"
                                     className="border w-full p-2 rounded-md"
                                     onChange={handleChange}
@@ -125,7 +125,7 @@ const Users = ({ darkMode }) => {
                             </div>
                             <div>
                                 <input type="email"
-                                    placeholder="Enter Email"
+                                    placeholder="Email"
                                     name="email"
                                     className="border w-full p-2 rounded-md"
                                     onChange={handleChange} 
@@ -133,7 +133,7 @@ const Users = ({ darkMode }) => {
                             </div>
                             <div>
                                 <input type="password"
-                                    placeholder="Enter Password"
+                                    placeholder="Password"
                                     name="password"
                                     className="border w-full p-2 rounded-md"
                                     onChange={handleChange}
@@ -141,7 +141,7 @@ const Users = ({ darkMode }) => {
                             </div>
                             <div>
                                 <input type="address"
-                                    placeholder="Enter Address"
+                                    placeholder="Alamat"
                                     name="address"
                                     className="border w-full p-2 rounded-md"
                                     onChange={handleChange}
@@ -149,7 +149,7 @@ const Users = ({ darkMode }) => {
                             </div>
                             <div>
                                 <select name="role" className={`border w-full p-2 rounded p-1 ${darkMode ? 'bg-gray-800 text-white' : 'primary-light-3 text-black'}`} onChange={handleChange}>
-                                    <option value="">Select Role</option>
+                                    <option value="">Pilih Role</option>
                                     <option value="admin">Admin</option>
                                 </select>
                             </div>
@@ -159,7 +159,7 @@ const Users = ({ darkMode }) => {
                                     type="submit"
                                     className="w-full mt-2 rounded-md bg-blue-700 text-white p-3 cursor-pointer hover:bg-blue-800"
                                 >
-                                   Add User
+                                   Tambah User
                                 </button>
 
                             </div>
@@ -169,17 +169,17 @@ const Users = ({ darkMode }) => {
 
                 <div className="lg:w-2/3">
                 
-                    <input type="text" placeholder="Search" className="border p-2 w-full mb-4 rounded" onChange={handleSearch} />
+                    <input type="text" placeholder="Cari User" className="border p-2 w-full mb-4 rounded" onChange={handleSearch} />
                     <div className={`${darkMode ? 'bg-gray-800' : 'primary-light-3'} shadow-md rounded-lg p-4`}>
                         <table className="w-full border-collapse border border-gray-200">
                             <thead>
                                 <tr className="primary-dark-10">
                                     <th className="border  p-2">No</th>
-                                    <th className="border  p-2">Name</th>
+                                    <th className="border  p-2">Nama</th>
                                     <th className="border  p-2">Email</th>
-                                    <th className="border  p-2">Address</th>
+                                    <th className="border  p-2">Alamat</th>
                                     <th className="border  p-2">Role</th>
-                                    <th className="border  p-2">Action</th>
+                                    <th className="border  p-2">Aksi</th>
                                 </tr>
                             </thead>
 
@@ -201,13 +201,13 @@ const Users = ({ darkMode }) => {
                                         </td>
                                         <td className="border  p-2">
                                             <button className="px-2 py-1 bg-red-500 text-white rounded cursor-pointer mr-2 hover:bg-red-700 transition"
-                                                onClick={() => handleDelete(user._id)}>Delete</button>
+                                                onClick={() => handleDelete(user._id)}>Hapus</button>
                                         </td>
                                     </tr>
                                 ))}
                             </tbody>
                         </table>
-                        {filteredUsers.length === 0 && <div>No Record</div>}
+                        {filteredUsers.length === 0 && <div>Data tidak ada</div>}
                     </div>
 
                 </div>
