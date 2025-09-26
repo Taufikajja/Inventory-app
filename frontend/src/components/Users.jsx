@@ -51,7 +51,7 @@ const Users = ({ darkMode }) => {
             }
         );
         if (response.data.success) {
-            alert("Users added successfully !");
+            alert("User berhasil ditambahkan !");
             setFormData({
                 name : "",
                 email : "",
@@ -61,8 +61,8 @@ const Users = ({ darkMode }) => {
             });
             fetchUsers();
         } else {
-            console.error("error adding user:");
-            alert("Error adding user. Please try again");
+            console.error("error saat menambahkan user:");
+            alert("Error saat menambahkan user. Silakan coba lagi");
         }
     };
 
@@ -76,7 +76,7 @@ const Users = ({ darkMode }) => {
     }
 
     const handleDelete = async (id) => {
-        const confirmDelete = window.confirm("Are you sure you want to delete this User?");
+        const confirmDelete = window.confirm("Apakah Anda yakin ingin menghapus User ini?");
         if (confirmDelete) {
             try {
                 const response = await axios.delete(
@@ -88,15 +88,15 @@ const Users = ({ darkMode }) => {
                     }
                 );
                 if (response.data.success) {
-                    alert("User deleted successfully!");
+                    alert("User berhasil dihapus!");
                     fetchUsers();
                 } else {
-                    console.error("Error deleting User");
-                    alert("Error deleting User. Please try again.");
+                    console.error("Error saat menghapus User");
+                    alert("Error saat menghapus User. Silakan coba lagi.");
                 }
             } catch (error) {
-                console.error("Error deleting User", error);
-                alert("Error deleting User. Please try again.");
+                console.error("Error saat menghapus User", error);
+                alert("Error saat menghapus User. Silakan coba lagi.");
             }
         }
     }

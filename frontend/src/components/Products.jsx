@@ -93,7 +93,7 @@ const Products = ({ darkMode }) => {
     };
 
     const handleDelete = async (id) => {
-        const confirmDelete = window.confirm("Are you sure you want to delete this Product?");
+        const confirmDelete = window.confirm("Apakah Anda yakin ingin menghapus Produk ini?");
         if (confirmDelete) {
             try {
                 const response = await axios.delete(
@@ -105,15 +105,15 @@ const Products = ({ darkMode }) => {
                     }
                 );
                 if (response.data.success) {
-                    alert("Product deleted successfully!");
+                    alert("Produk berhasil dihapus!");
                     fetchProducts();
                 } else {
-                    console.error("Error deleting product:", data);
-                    alert("Error deleting product. Please try again.");
+                    console.error("Error saat menghapus produk:", data);
+                    alert("Error saat menghapus produk. Silakan coba lagi.");
                 }
             } catch (error) {
-                console.error("Error deleting product:", error);
-                alert("Error deleting product. Please try again.");
+                console.error("Error saat menghapus produk:", error);
+                alert("Error saat menghapus produk. Silakan coba lagi.");
             }
         }
     }
@@ -160,7 +160,7 @@ const Products = ({ darkMode }) => {
                     }
                 );
                 if (response.data.success) {
-                    alert("Product updated successfully!");
+                    alert("Produk berhasil diubah!");
                     fetchProducts();
                     setOpenModal(false);
                     setEditProduct(null);
@@ -174,10 +174,10 @@ const Products = ({ darkMode }) => {
                         supplierId: "",
                     });
                 } else {
-                    alert("Error updating Product. Please try again.");
+                    alert("Error saat mengubah Produk. Silakan coba lagi.");
                 }
             } catch (error) {
-                alert("Error updating Product. Please try again.");
+                alert("Error saat mengubah Produk. Silakan coba lagi.");
             }
             return;
         } else {
@@ -193,7 +193,7 @@ const Products = ({ darkMode }) => {
                 );
                 if (response.data.success) {
                     fetchProducts();
-                    alert("Products added successfully !");
+                    alert("Produk berhasil ditambahkan!");
                     setOpenModal(false);
                     setFormData({
                         image: null,
@@ -205,10 +205,10 @@ const Products = ({ darkMode }) => {
                         supplierId: "",
                     });
                 } else {
-                    alert("Error adding Product. Please try again");
+                    alert("Error saat menambahkan Produk. Silakan coba lagi");
                 }
             } catch (error) {
-                alert("Error adding product. Please try again");
+                alert("Error saat menambahkan Produk. Silakan coba lagi");
             }
         }
     };
@@ -359,14 +359,15 @@ const Products = ({ darkMode }) => {
                             />
                         )}
         
-                          <input
-                              type="text"
+                          <textarea
+                              rows={5}
                               name="description"
                               value={formData.description}
                               onChange={handleChange}
                               placeholder='Deskripsi'
                               className='border p-1 rounded px-4'
                           />
+                          
                           <input
                               type="number"
                               name="price"

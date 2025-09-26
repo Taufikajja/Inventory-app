@@ -49,11 +49,11 @@ const Categories = ({ darkMode }) => {
                 setEditCategory(null);
                 setCategoryName("");
                 setCategoryDescription("");
-                alert("Category updated successfully !");
+                alert("Kategori Berhasil Diubah !");
                 fetchCategories();
             } else {
-                console.error("error editing category:", data);
-                alert("Error editing category. Please try again");
+                console.error("error saat mengubah kategori:", data);
+                alert("Error saat mengubah kategori. Silakan coba lagi");
             }
         } else {
 
@@ -73,16 +73,16 @@ const Categories = ({ darkMode }) => {
     if (response.data.success) {
         setCategoryName("");
         setCategoryDescription("");
-        alert("Category added successfully !");
+        alert("Kategori Berhasil Ditambahkan !");
         fetchCategories();
     } else {
-        console.error("error adding category:", response.data);
-        alert("Error adding category. Please try again");
+        console.error("error saat menambahkan kategori:", response.data);
+        alert("Error saat menambahkan kategori. Silakan coba lagi");
     }
     };
 
     const handleDelete = async (id) => {
-const confirmDelete = window.confirm("Are you sure you want to delete this category?");
+const confirmDelete = window.confirm("Apakah Anda yakin ingin menghapus kategori ini?");
 if (confirmDelete) {
     try {
         const response = await axios.delete(
@@ -94,15 +94,15 @@ if (confirmDelete) {
             }
         );
         if(response.data.success) {
-            alert("Category deleted successfully!");
+            alert("Kategori berhasil dihapus!");
             fetchCategories();
         } else {
-            console.error("Error deleting category:", data);
-            alert("Error deleting category. Please try again.");
+            console.error("Error saat menghapus kategori:", data);
+            alert("Error saat menghapus kategori. Silakan coba lagi.");
         }
     } catch (error) {
-        console.error("Error deleting category:", error);
-        alert("Error deleting category. Please try again.");
+        console.error("Error saat menghapus kategori:", error);
+        alert("Error saat menghapus kategori. Silakan coba lagi.");
     }
 }
     }

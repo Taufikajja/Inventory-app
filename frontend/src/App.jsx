@@ -7,7 +7,6 @@ import Dashboard from './pages/Dashboard';
 import Categories from './components/Categories';
 import Suppliers from './components/Suppliers';
 import Logout from './pages/Logout';
-import DashboardCpn from './components/dashboard_cpn';
 import Products from './components/Products';
 import Users from './components/Users';
 import Navbar from './components/Navbar';

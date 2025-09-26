@@ -143,7 +143,9 @@ const seed = async () => {
         }
     } catch(error) {
         console.log(error);
+    } finally {
+        process.exit(0);
     }
-}
+};
 
 seed();

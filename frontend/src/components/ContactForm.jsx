@@ -36,7 +36,7 @@ const ContactForm = ({ darkMode }) => {
       onSubmit={handleSubmit}
     >
     <h2 className="text-2xl font-bold mb-4 text-center">
-        Contact Form
+        Form Kontak
     </h2>
     <input type="text" 
            placeholder="Masukkan Nama" 

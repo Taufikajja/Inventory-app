@@ -84,7 +84,7 @@ const Suppliers = ({ darkMode }) => {
                 );
                 if (response.data.success) {
                     fetchSuppliers();
-                    alert("Supplier edited successfully !");
+                    alert("Supplier berhasil diubah !");
                     setAddModal(false);
                     setEditSupplier(null);
                     setFormData({
@@ -94,12 +94,12 @@ const Suppliers = ({ darkMode }) => {
                         address: "",
                     });
                 } else {
-                    console.error("error edited Supplier:", response.data);
-                    alert("Error edited Supplier. Please try again");
+                    console.error("error saat mengubah Supplier:", response.data);
+                    alert("Error saat mengubah Supplier. Silakan coba lagi");
                 }
             } catch (error) {
-                console.error("Error adding supplier:", error.message);
-                alert("Error edited supplier. Please try again");
+                console.error("Error saat mengubah Supplier:", error.message);
+                alert("Error saat mengubah supplier. Silakan coba lagi");
             }
 
         } else {
@@ -114,7 +114,7 @@ const Suppliers = ({ darkMode }) => {
         );
         if (response.data.success) {
             fetchSuppliers();
-            alert("Supplier added successfully !");
+            alert("Supplier berhasil ditambahkan!");
             setAddModal(false);
             setFormData({
                 name: "",
@@ -123,18 +123,18 @@ const Suppliers = ({ darkMode }) => {
                 address: "",
             });
         } else {
-            console.error("error adding Supplier:", response.data);
-            alert("Error adding Supplier. Please try again");
+            console.error("error saat menambahkan Supplier:", response.data);
+            alert("Error saat menambahkan Supplier. Silakan coba lagi");
         }
         } catch (error) {
-            console.error("Error adding supplier:", error.message);
-            alert("Error adding supplier. Please try again");
+            console.error("Error saat menambahkan Supplier:", error.message);
+            alert("Error saat menambahkan Supplier. Silakan coba lagi");
         }
 }
     };
 
     const handleDelete = async (id) => {
-        const confirmDelete = window.confirm("Are you sure you want to delete this supplier?");
+        const confirmDelete = window.confirm("Apakah Anda yakin ingin menghapus Supplier ini?");
         if (confirmDelete) {
             try {
                 const response = await axios.delete(
@@ -146,15 +146,15 @@ const Suppliers = ({ darkMode }) => {
                     }
                 );
                 if (response.data.success) {
-                    alert("Supplier deleted successfully!");
+                    alert("Supplier berhasil dihapus!");
                     fetchSuppliers();
                 } else {
-                    console.error("Error deleting supplier:", data);
-                    alert("Error deleting supplier. Please try again.");
+                    console.error("Error saat menghapus supplier:", data);
+                    alert("Error saat menghapus supplier. Silakan coba lagi.");
                 }
             } catch (error) {
-                console.error("Error deleting supplier:", error);
-                alert("Error deleting supplier. Please try again.");
+                console.error("Error saat menghapus supplier:", error);
+                alert("Error saat menghapus supplier. Silakan coba lagi.");
             }
         }
     }
@@ -244,7 +244,9 @@ const Suppliers = ({ darkMode }) => {
                     {addModal && (
                             <div className='fixed top-0 left-0 w-full h-full bg-black/50 flex justify-center items-center'>
                                 <div className={`${darkMode ? 'bg-gray-800' : 'primary-light-3'} p-4 rounded shadow-md w-1/3 relative`}>
-                <h1 className ='text-xl font-bold'>Tambah Supplier</h1>
+                <h1 className ='text-xl font-bold'>
+                    Tambah Supplier
+                    </h1>
                 <button className='absolute top-4 right-4 font-bold text-lg cursor-pointer' onClick={closeModal}>X</button>
                 <form className='flex flex-col gap-4 mt-4' onSubmit={handleSubmit}>
                     <input 
