@@ -14,6 +14,9 @@ const Users = ({ darkMode }) => {
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(false);
     const [filteredUsers, setFilteredUsers] = useState([]);
+    // Pagination states
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 5;
 
     const fetchUsers = async () => {
         setLoading(true);
@@ -64,12 +67,13 @@ const Users = ({ darkMode }) => {
     };
 
     const handleSearch = (e) => {
-        setFilteredUsers(   
+        setFilteredUsers(
             users.filter(user =>
                 user.name.toLowerCase().includes(e.target.value.toLowerCase())
             )
-        )
-    } 
+        );
+        setCurrentPage(1); // Reset ke halaman pertama saat search
+    }
 
     const handleDelete = async (id) => {
         const confirmDelete = window.confirm("Are you sure you want to delete this User?");
@@ -183,31 +187,44 @@ const Users = ({ darkMode }) => {
                                 </tr>
                             </thead>
 
-                            <tbody>
-                                {filteredUsers && filteredUsers.map((user, index) => (
-                                    <tr key={index}>
-                                        <td className="border  p-2">{index + 1}</td>
-                                        <td className="border  p-2">
-                                        {user.name}
-                                        </td>
-                                        <td className="border  p-2">
-                                        {user.email}
-                                        </td>
-                                        <td className="border  p-2">
-                                            {user.address}
-                                        </td>
-                                        <td className="border  p-2">
-                                            {user.role}
-                                        </td>
-                                        <td className="border  p-2">
-                                            <button className="px-2 py-1 bg-red-500 text-white rounded cursor-pointer mr-2 hover:bg-red-700 transition"
-                                                onClick={() => handleDelete(user._id)}>Hapus</button>
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
+                                                        <tbody>
+                                                                {filteredUsers &&
+                                                                    filteredUsers
+                                                                        .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
+                                                                        .map((user, index) => (
+                                                                            <tr key={user._id || index}>
+                                                                                <td className="border  p-2">{(currentPage - 1) * itemsPerPage + index + 1}</td>
+                                                                                <td className="border  p-2">{user.name}</td>
+                                                                                <td className="border  p-2">{user.email}</td>
+                                                                                <td className="border  p-2">{user.address}</td>
+                                                                                <td className="border  p-2">{user.role}</td>
+                                                                                <td className="border  p-2">
+                                                                                    <button className="px-2 py-1 bg-red-500 text-white rounded cursor-pointer mr-2 hover:bg-red-700 transition"
+                                                                                        onClick={() => handleDelete(user._id)}>Hapus</button>
+                                                                                </td>
+                                                                            </tr>
+                                                                        ))}
+                                                        </tbody>
                         </table>
-                        {filteredUsers.length === 0 && <div>Data tidak ada</div>}
+                                                {filteredUsers.length === 0 && <div>Data tidak ada</div>}
+                                                {/* Pagination Controls */}
+                                                <div className="flex justify-center items-center mt-4 gap-2">
+                                                    <button
+                                                        className="px-3 py-1 rounded bg-blue-600 hover:bg-blue-700"
+                                                        onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                                                        disabled={currentPage === 1}
+                                                    >
+                                                        Prev
+                                                    </button>
+                                                    <span>Halaman {currentPage} dari {Math.ceil(filteredUsers.length / itemsPerPage)}</span>
+                                                    <button
+                                                        className="px-3 py-1 rounded bg-blue-600 hover:bg-blue-700"
+                                                        onClick={() => setCurrentPage((prev) => Math.min(prev + 1, Math.ceil(filteredUsers.length / itemsPerPage)))}
+                                                        disabled={currentPage === Math.ceil(filteredUsers.length / itemsPerPage) || filteredUsers.length === 0}
+                                                    >
+                                                        Next
+                                                    </button>
+                                                </div>
                     </div>
 
                 </div>

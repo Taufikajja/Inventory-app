@@ -9,6 +9,9 @@ const Products = ({ darkMode }) => {
     const [suppliers, setSuppliers] = useState([]);
     const [products, setProducts] = useState([]);
     const [filteredProducts, setFilteredProducts] = useState([]);
+    // Pagination states
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 5;
     const [ formData, setFormData] = useState({
         image: null,
         name: "",
@@ -215,12 +218,13 @@ const Products = ({ darkMode }) => {
             products.filter(product =>
                 product.name.toLowerCase().includes(e.target.value.toLowerCase())
             )
-        )
-    } 
+        );
+        setCurrentPage(1); // Reset ke halaman pertama saat search
+    }
     
 
   return (
-      <div className='w-full h-full flex flex-col gap-4 p-4'>
+    <div className='w-full h-full flex flex-col gap-4 p-4'>
           <h1 className='text-2xl font-bold'>Manajemen Produk</h1>
           <div className='flex justify-between items-center'>
               <input
@@ -236,69 +240,88 @@ const Products = ({ darkMode }) => {
                   </button>
           </div>
 
-          <div>
-              <table className="w-full border-collapse border border-gray-300 mt-4">
-                  <thead>
-                      <tr className="primary-dark-10">
-                          <th className="border p-2">No</th>
-                          <th className="border p-2">Nama Produk</th>
-                          <th className="border p-2">Gambar Produk</th>
-                          <th className="border p-2">Nama Kategori</th>
-                          <th className="border p-2">Nama Supplier</th>
-                          <th className="border p-2">Harga</th>
-                          <th className="border p-2">Stok</th>
-                          <th className="border p-2">Aksi</th>
-
-                      </tr>
-                  </thead>
-                  <tbody>
-                      {filteredProducts && filteredProducts.map((product, index) => (
-                          <tr key={product._id}>
-                              <td className="border  p-2">{index + 1}</td>
-                              <td className="border  p-2">{product.name}</td>
-                              <td className="border  p-2">
-                                  {product.image ? (
-                                      <img
-                                          src={`http://localhost:3000/uploads/${product.image}`}
-                                          alt={product.name}
-                                          style={{ width: '60px', height: '60px', objectFit: 'cover', borderRadius: '8px', cursor: 'pointer' }}
-                                          onClick={() => setModalPreviewImage(`http://localhost:3000/uploads/${product.image}`)}
-                                      />
-                                  ) : (
-                                      <span className="text-gray-400">Tidak ada gambar</span>
-                                  )}
-                              </td>
-                              <td className="border  p-2">{product.categoryId.categoryName}</td>
-                              <td className="border  p-2">{product.supplierId.name}</td>
-                              <td className="border  p-2">Rp.{product.price},00</td>
-                              <td className="border  p-2">
-                                <span className="rounded-full font-semibold">
-                                {product.stock == 0 ? (
-                                    <span className="bg-red-100 text-red-500 px-2 py-1 rounded-full">{product.stock}</span>
-                                ) : product.stock < 5 ? (
-                                    <span className="bg-yellow-100 text-yellow-600 px-2 py-1 rounded-full">{product.stock}</span>
-                                 ) : (
-                                    <span className="bg-green-100 text-green-500 px-2 py-1 rounded-full">{product.stock}</span>
-                                )}
-                                </span>
-                                </td>
-                              <td className="border  p-2">
-                                  <button className="px-2 py-1 bg-yellow-500 text-white rounded cursor-pointer mr-2 hover:bg-yellow-700 transition"
-                                      onClick={() => handleEdit(product)}>
-                                      Ubah
-                                  </button>
-                                  <button className="px-2 py-1 bg-red-500 text-white rounded cursor-pointer mr-2 hover:bg-red-600 transition"
-                                      onClick={() => handleDelete(product._id)}>
-                                      Hapus
-                                  </button>
-                              </td>
-                          </tr>
-                      ))}
-                  </tbody>
-                 
-              </table>
-              {filteredProducts.length === 0 && <div>Data tidak ada</div>}
-          </div>
+          <div className={`${darkMode ? 'bg-gray-800' : 'primary-light-3'} shadow-md rounded-lg p-4`}>
+                            <table className="w-full border-collapse border border-gray-300 mt-4">
+                                    <thead>
+                                            <tr className="primary-dark-10">
+                                                    <th className="border p-2">No</th>
+                                                    <th className="border p-2">Nama Produk</th>
+                                                    <th className="border p-2">Gambar Produk</th>
+                                                    <th className="border p-2">Nama Kategori</th>
+                                                    <th className="border p-2">Nama Supplier</th>
+                                                    <th className="border p-2">Harga</th>
+                                                    <th className="border p-2">Stok</th>
+                                                    <th className="border p-2">Aksi</th>
+                                            </tr>
+                                    </thead>
+                                    <tbody>
+                                            {filteredProducts &&
+                                                filteredProducts
+                                                    .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
+                                                    .map((product, index) => (
+                                                        <tr key={product._id}>
+                                                            <td className="border  p-2">{(currentPage - 1) * itemsPerPage + index + 1}</td>
+                                                            <td className="border  p-2">{product.name}</td>
+                                                            <td className="border  p-2">
+                                                                {product.image ? (
+                                                                    <img
+                                                                        src={`http://localhost:3000/uploads/${product.image}`}
+                                                                        alt={product.name}
+                                                                        style={{ width: '60px', height: '60px', objectFit: 'cover', borderRadius: '8px', cursor: 'pointer' }}
+                                                                        onClick={() => setModalPreviewImage(`http://localhost:3000/uploads/${product.image}`)}
+                                                                    />
+                                                                ) : (
+                                                                    <span className="text-gray-400">Tidak ada gambar</span>
+                                                                )}
+                                                            </td>
+                                                            <td className="border  p-2">{product.categoryId.categoryName}</td>
+                                                            <td className="border  p-2">{product.supplierId.name}</td>
+                                                            <td className="border  p-2">Rp.{product.price},00</td>
+                                                            <td className="border  p-2">
+                                                                <span className="rounded-full font-semibold">
+                                                                    {product.stock == 0 ? (
+                                                                        <span className="bg-red-100 text-red-500 px-2 py-1 rounded-full">{product.stock}</span>
+                                                                    ) : product.stock < 5 ? (
+                                                                        <span className="bg-yellow-100 text-yellow-600 px-2 py-1 rounded-full">{product.stock}</span>
+                                                                    ) : (
+                                                                        <span className="bg-green-100 text-green-500 px-2 py-1 rounded-full">{product.stock}</span>
+                                                                    )}
+                                                                </span>
+                                                            </td>
+                                                            <td className="border  p-2">
+                                                                <button className="px-2 py-1 bg-yellow-500 text-white rounded cursor-pointer mr-2 hover:bg-yellow-700 transition"
+                                                                    onClick={() => handleEdit(product)}>
+                                                                    Ubah
+                                                                </button>
+                                                                <button className="px-2 py-1 bg-red-500 text-white rounded cursor-pointer mr-2 hover:bg-red-600 transition"
+                                                                    onClick={() => handleDelete(product._id)}>
+                                                                    Hapus
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                    ))}
+                                    </tbody>
+                            </table>
+                            {filteredProducts.length === 0 && <div>Data tidak ada</div>}
+                            {/* Pagination Controls */}
+                            <div className="flex justify-center items-center mt-4 gap-2">
+                                <button
+                                    className="px-3 py-1 rounded bg-blue-600 hover:bg-blue-700"
+                                    onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                                    disabled={currentPage === 1}
+                                >
+                                    Prev
+                                </button>
+                                <span>Halaman {currentPage} dari {Math.ceil(filteredProducts.length / itemsPerPage)}</span>
+                                <button
+                                    className="px-3 py-1 rounded bg-blue-600 hover:bg-blue-700"
+                                    onClick={() => setCurrentPage((prev) => Math.min(prev + 1, Math.ceil(filteredProducts.length / itemsPerPage)))}
+                                    disabled={currentPage === Math.ceil(filteredProducts.length / itemsPerPage) || filteredProducts.length === 0}
+                                >
+                                    Next
+                                </button>
+                            </div>
+                    </div>
 
           { openModal && (
               <div className='fixed top-0 left-0 w-full h-full bg-black/50 flex justify-center items-center'>

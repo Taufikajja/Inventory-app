@@ -15,6 +15,9 @@ const Suppliers = ({ darkMode }) => {
     const [loading, setLoading] = useState(false);
     const [suppliers, setSuppliers] = useState([]);
     const [filteredSuppliers, setFilteredSuppliers] = useState([]);
+    // Pagination states
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 5;
 
     const handleChange = (e) => {
         const {name, value } = e.target;
@@ -159,9 +162,10 @@ const Suppliers = ({ darkMode }) => {
     const handleSearch = (e) => {
         setFilteredSuppliers(
             suppliers.filter(supplier =>
-            supplier.name.toLowerCase().includes(e.target.value.toLowerCase()) 
-        )
-    )
+                supplier.name.toLowerCase().includes(e.target.value.toLowerCase())
+            )
+        );
+        setCurrentPage(1); // Reset ke halaman pertama saat search
     }
 
   return (
@@ -179,43 +183,62 @@ const Suppliers = ({ darkMode }) => {
         </div>
 
             {loading ? <div>Loading ....</div> : (
-                <div>
-                <table className="w-full border-collapse border border-gray-300 mt-4">
-                    <thead>
-                          <tr className="primary-dark-10">
-                            <th className="border  p-2">No</th>
-                            <th className="border  p-2">Nama</th>
-                            <th className="border  p-2">Email</th>
-                            <th className="border  p-2">Nomor Telepon</th>
-                            <th className="border  p-2">Alamat</th>
-                            <th className="border  p-2">Aksi</th>
-
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {filteredSuppliers.map((supplier, index) => (
-                            <tr key={supplier._id}>
-                                <td className="border  p-2">{index + 1}</td>
-                                <td className="border  p-2">{supplier.name}</td>
-                                <td className="border  p-2">{supplier.email}</td>
-                                <td className="border  p-2">{supplier.number}</td>
-                                <td className="border  p-2">{supplier.address}</td>
-                                <td className="border  p-2">
-                                    <button className="px-2 py-1 bg-yellow-500 text-white rounded cursor-pointer mr-2 hover:bg-yellow-700 transition"
-                                    onClick={() => handleEdit(supplier)}>
-                                        Ubah
+                                <div className={`${darkMode ? 'bg-gray-800' : 'primary-light-3'} shadow-md rounded-lg p-4`}>
+                                <table className="w-full border-collapse border border-gray-300 mt-4">
+                                        <thead>
+                                                    <tr className="primary-dark-10">
+                                                        <th className="border  p-2">No</th>
+                                                        <th className="border  p-2">Nama</th>
+                                                        <th className="border  p-2">Email</th>
+                                                        <th className="border  p-2">Nomor Telepon</th>
+                                                        <th className="border  p-2">Alamat</th>
+                                                        <th className="border  p-2">Aksi</th>
+                                                </tr>
+                                        </thead>
+                                        <tbody>
+                                                {filteredSuppliers
+                                                    .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
+                                                    .map((supplier, index) => (
+                                                        <tr key={supplier._id}>
+                                                                <td className="border  p-2">{(currentPage - 1) * itemsPerPage + index + 1}</td>
+                                                                <td className="border  p-2">{supplier.name}</td>
+                                                                <td className="border  p-2">{supplier.email}</td>
+                                                                <td className="border  p-2">{supplier.number}</td>
+                                                                <td className="border  p-2">{supplier.address}</td>
+                                                                <td className="border  p-2">
+                                                                        <button className="px-2 py-1 bg-yellow-500 text-white rounded cursor-pointer mr-2 hover:bg-yellow-700 transition"
+                                                                        onClick={() => handleEdit(supplier)}>
+                                                                                Ubah
+                                                                        </button>
+                                                                        <button className="px-2 py-1 bg-red-500 text-white rounded cursor-pointer mr-2 hover:bg-red-700 transition"
+                                                                        onClick={() => handleDelete(supplier._id)}>
+                                                                                Hapus
+                                                                        </button>
+                                                                </td>
+                                                        </tr>
+                                                ))}
+                                        </tbody>
+                                </table>
+                                {filteredSuppliers.length === 0 && <div>Data tidak ada</div>}
+                                {/* Pagination Controls */}
+                                <div className="flex justify-center items-center mt-4 gap-2">
+                                    <button
+                                        className="px-3 py-1 rounded  bg-blue-600 hover:bg-blue-700"
+                                        onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                                        disabled={currentPage === 1}
+                                    >
+                                        Prev
                                     </button>
-                                    <button className="px-2 py-1 bg-red-500 text-white rounded cursor-pointer mr-2 hover:bg-red-700 transition"
-                                    onClick={() => handleDelete(supplier._id)}>
-                                        Hapus
+                                    <span>Halaman {currentPage} dari {Math.ceil(filteredSuppliers.length / itemsPerPage)}</span>
+                                    <button
+                                        className="px-3 py-1 rounded  bg-blue-600 hover:bg-blue-700"
+                                        onClick={() => setCurrentPage((prev) => Math.min(prev + 1, Math.ceil(filteredSuppliers.length / itemsPerPage)))}
+                                        disabled={currentPage === Math.ceil(filteredSuppliers.length / itemsPerPage) || filteredSuppliers.length === 0}
+                                    >
+                                        Next
                                     </button>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-                {filteredSuppliers.length === 0 && <div>Data tidak ada</div>}
-                </div>
+                                </div>
+                                </div>
             )}
 
                     {addModal && (

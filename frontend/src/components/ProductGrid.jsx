@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ProductDetailCard from './ProductDetailCard';
 
-const ProductGrid = ({ priceOrder, searchTerm, category, darkMode }) => {
+const ProductGrid = ({ priceOrder, searchTerm, category, darkMode, currentPage = 1, itemsPerPage = 4, setCurrentPage }) => {
   const [products, setProducts] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -54,22 +54,40 @@ const ProductGrid = ({ priceOrder, searchTerm, category, darkMode }) => {
     filteredProducts.sort((a, b) => b.price - a.price);
   }
 
+  // Pagination logic
+  const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
+  const startIdx = (currentPage - 1) * itemsPerPage;
+  const endIdx = startIdx + itemsPerPage;
+  const paginatedProducts = filteredProducts.slice(startIdx, endIdx);
+
   if (loading) return <div className="text-center py-8">Loading produk...</div>;
   if (error) return <div className="text-center py-8 text-red-500">{error}</div>;
 
   return (
     <>
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8 mt-8">
-        {filteredProducts.map((product) => (
+        {paginatedProducts.map((product) => (
           <div
             key={product.id}
             className={`${darkMode ? 'bg-gray-800 text-white' : 'primary-light-3 text-black'} rounded-lg shadow p-6 flex flex-col items-center cursor-pointer hover:scale-105 transition`}
             onClick={() => setSelectedProduct(product)}
           >
-            <img src={product.image} alt={product.name} className="w-32 h-32 object-cover mb-4" />
+            <img src={product.image} alt={product.name} className="w-32 h-32 object-cover mb-4 rounded" />
             <h3 className="text-lg font-bold mb-2">{product.name}</h3>
             <span className="font-bold text-blue-700">Rp. {product.price.toLocaleString()}</span>
           </div>
+        ))}
+      </div>
+      {/* Pagination controls */}
+      <div className="flex justify-center mt-6 gap-2">
+        {Array.from({ length: totalPages }, (_, i) => (
+          <button
+            key={i + 1}
+            className={`px-3 py-1 rounded ${currentPage === i + 1 ? 'bg-blue-600 text-white' : 'bg-gray-200 hover:bg-gray-300'}`}
+            onClick={() => setCurrentPage(i + 1)}
+          >
+            {i + 1}
+          </button>
         ))}
       </div>
       {selectedProduct && (

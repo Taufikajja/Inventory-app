@@ -7,6 +7,9 @@ const Categories = ({ darkMode }) => {
     const [categoryName, setCategoryName] = useState("");
     const [categoryDescription, setCategoryDescription] = useState("");
     const [categories, setCategories] = useState([]);
+    // Pagination states
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 5;
     const [loading, setLoading] = useState(false);
     const [editCategory, setEditCategory] = useState(null);
 
@@ -124,7 +127,7 @@ if (confirmDelete) {
 
         <div className="flex flex-col lg:flex-row gap-4">
             <div className="lg:w-1/3">
-                <div className={`${darkMode ? 'bg-gray-800' : 'primary-light-3'} shadow-md rounded-lg p-4`}>
+                    <div className={`${darkMode ? 'bg-gray-800' : 'primary-light-3'} shadow-md rounded-lg p-4`}>
                         <h2 className="text-center text-xl font-bold mb-4">{editCategory ? "Ubah Kategori" : "Tambah Kategori"}</h2>
                 <form className="space-y-4" onSubmit={handleSubmit}>
                     <div>
@@ -167,7 +170,7 @@ if (confirmDelete) {
         </div>
 
     <div className="lg:w-2/3">
-    <div className={`${darkMode ? 'bg-gray-800' : 'primary-light-3'} shadow-md rounded-lg p-4`}>
+                    <div className={`${darkMode ? 'bg-gray-800' : 'primary-light-3'} shadow-md rounded-lg p-4`}>
         <table className="w-full border-collapse border border-gray-200">
             <thead>
                 <tr className="primary-dark-10">
@@ -178,30 +181,52 @@ if (confirmDelete) {
                 </tr>
             </thead>
 
-        <tbody>
-            {categories.map((category, index) => (
-                <tr key={category._id || index}>
-                    <td className="border  p-2">{index + 1}</td>
-                    <td className="border  p-2">{category.categoryName}</td>
-                    <td className="border  p-2">{category.categoryDescription}</td>
-                    <td className="border  p-2">
-                        <button className="px-2 py-1 bg-yellow-500 text-white rounded cursor-pointer mr-2 hover:bg-yellow-700 transition" onClick={() => handleEdit(category)}
-                            >
-                                Ubah</button>
-                        <button className="px-2 py-1 bg-red-500 text-white rounded cursor-pointer mr-2 hover:bg-red-700 transition"
-                        onClick = {() => handleDelete(category._id)}>Hapus</button>
-                    </td>
-                </tr>
-            ))}
-        </tbody>
+                <tbody>
+                        {categories
+                            .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
+                            .map((category, index) => (
+                                <tr key={category._id || index}>
+                                    <td className="border  p-2">{(currentPage - 1) * itemsPerPage + index + 1}</td>
+                                    <td className="border  p-2">{category.categoryName}</td>
+                                    <td className="border  p-2">{category.categoryDescription}</td>
+                                    <td className="border  p-2">
+                                        <button className="px-2 py-1 bg-yellow-500 text-white rounded cursor-pointer mr-2 hover:bg-yellow-700 transition" onClick={() => handleEdit(category)}>
+                                            Ubah
+                                        </button>
+                                        <button className="px-2 py-1 bg-red-500 text-white rounded cursor-pointer mr-2 hover:bg-red-700 transition"
+                                            onClick={() => handleDelete(category._id)}>
+                                            Hapus
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))}
+                </tbody>
 
-        </table>
-        </div>
+                </table>
+                {/* Pagination Controls */}
+                <div className="flex justify-center items-center mt-4 gap-2">
+                    <button
+                        className="px-3 py-1 rounded  bg-blue-600 hover:bg-blue-700"
+                        onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                        disabled={currentPage === 1}
+                    >
+                        Prev
+                    </button>
+                    <span>Halaman {currentPage} dari {Math.ceil(categories.length / itemsPerPage)}</span>
+                    <button
+                        className="px-3 py-1 rounded  bg-blue-600 hover:bg-blue-700"
+                        onClick={() => setCurrentPage((prev) => Math.min(prev + 1, Math.ceil(categories.length / itemsPerPage)))}
+                        disabled={currentPage === Math.ceil(categories.length / itemsPerPage) || categories.length === 0}
+                    >
+                        Next
+                    </button>
+                </div>
+                </div>
 
+                </div>
         </div>
-    </div>
 </div>
-  )
+    );
 }
 
 export default Categories
